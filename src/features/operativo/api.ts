@@ -28,6 +28,13 @@ export type Orden = {
   demostracion: boolean;
   observaciones: string;
   created_at: string;
+  mozo_nombre?: string | null;
+  paid_at?: string | null;
+  confirmed_at?: string | null;
+  preparation_started_at?: string | null;
+  ready_at?: string | null;
+  delivered_at?: string | null;
+  finalized_at?: string | null;
   mesa: { numero: number; nombre: string; estado: string } | null;
   items: {
     producto_id: string;
@@ -94,6 +101,22 @@ export type OrdenMesa = {
   estado_pedido: string;
   estado_pago: string;
 };
+export function useColaCocina() {
+  const { local, usuario, roles } = useOperativo();
+  return useQuery({
+    queryKey: ['operativo', 'cocina', local, usuario],
+    enabled: !!local && roles.some((r) => ['COCINA', 'ADMINISTRADOR'].includes(r)),
+    queryFn: () => rpcOperativo<Orden[]>('cola_cocina', { p_local: local }),
+  });
+}
+export function useListos() {
+  const { local, usuario, roles } = useOperativo();
+  return useQuery({
+    queryKey: ['operativo', 'listos', local, usuario],
+    enabled: !!local && roles.some((r) => ['MOZO', 'ADMINISTRADOR'].includes(r)),
+    queryFn: () => rpcOperativo<Orden[]>('cola_listos', { p_local: local }),
+  });
+}
 export function useOrdenesMesa() {
   const { local, usuario } = useOperativo();
   return useQuery({
@@ -114,6 +137,14 @@ export async function rpcOperativo<T>(nombre: string, args: Record<string, unkno
   const { data, error } = await crearClienteInsforge().database.rpc(nombre, args);
   if (error) {
     const m = error.message ?? '';
+    // Solo códigos de operación: nunca mensajes del proveedor, contacto o importes.
+    console.warn('[operativo]', nombre, 'RPC_RECHAZADO');
+    if (m.includes('TRANSICION_INVALIDA'))
+      throw new Error('Este cambio de estado no está permitido. Consulta la orden actual.');
+    if (m.includes('ANULACION_NO_PERMITIDA'))
+      throw new Error('Solo se permite anular antes de iniciar cocina y con la caja abierta.');
+    if (m.includes('REFERENCIA_SENSIBLE'))
+      throw new Error('La referencia no puede contener números de tarjeta ni CVV.');
     if (m.includes('EFECTIVO_INSUFICIENTE'))
       throw new Error('El efectivo recibido no cubre el total del pedido.');
     if (m.includes('TOTAL_NO_CONFIRMADO'))
