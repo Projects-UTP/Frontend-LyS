@@ -26,27 +26,35 @@ export const categorias = [
   'Acompañamientos',
   'Bebidas',
   'Combos',
+  'Alitas',
+];
+export const categoriasInicio = [
+  { nombre: 'Pollos a la brasa', imagen: 'cat-pollos' },
+  { nombre: 'Parrillas', imagen: 'cat-parrillas' },
+  { nombre: 'Alitas', imagen: 'cat-alitas' },
+  { nombre: 'Acompañamientos', imagen: 'catalogo-v2-papas' },
+  { nombre: 'Bebidas', imagen: 'cat-bebidas' },
 ];
 export const productosMuestra = [
   {
     id: 'pollo',
     categoria: 'Pollos a la brasa',
-    nombre: 'Pollo a la brasa',
+    nombre: 'Pollo entero',
     descripcion: 'Una presentación de nuestra propuesta de brasa para compartir.',
-    imagen: true,
+    imagen: 'fav-pollo-entero',
   },
   {
-    id: 'parrilla',
-    categoria: 'Parrillas',
-    nombre: 'Parrilla para compartir',
-    descripcion: 'Una idea de selección a la parrilla. Composición pendiente de confirmar.',
-    imagen: false,
+    id: 'cuarto',
+    categoria: 'Pollos a la brasa',
+    nombre: 'Un cuarto de pollo',
+    descripcion: 'Tu antojo de brasa, en una presentación individual de muestra.',
+    imagen: 'fav-cuarto-pollo',
   },
   {
     id: 'anticuchos',
     categoria: 'Anticuchos',
     nombre: 'Anticuchos',
     descripcion: 'Una muestra de la categoría. Consulta las opciones disponibles.',
-    imagen: false,
+    imagen: 'fav-anticuchos',
   },
 ];

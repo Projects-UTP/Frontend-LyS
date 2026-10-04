@@ -1,128 +1,88 @@
 import { Link } from 'react-router-dom';
-import { ActionLink, Badge, Section } from '@/shared/ui';
-import { categorias, negocio, productosMuestra } from './contenido';
+import { ActionLink, Badge, Section, Container } from '@/shared/ui';
+import { categoriasInicio, negocio, productosMuestra } from './contenido';
+import { Icon } from './Icon';
 
 export function Categories() {
   return (
-    <Section id="categorias" title="¿Qué se te antoja?" eyebrow="DESCUBRE NUESTRA PROPUESTA">
-      <p className="sample-note">Carta de muestra · categorías pendientes de confirmar.</p>
-      <div className="category-list">
-        {categorias.map((item, index) => (
-          <Link key={item} to={`/carta?categoria=${encodeURIComponent(item)}`}>
-            <small>0{index + 1}</small>
-            <span>{item}</span>
-            <span aria-hidden="true">↗</span>
+    <section className="discovery-band" aria-labelledby="categories-title">
+      <Container className="editorial-row">
+        <div className="section-intro">
+          <p className="eyebrow">NUESTROS IMPERDIBLES</p>
+          <h2 id="categories-title">
+            Lo mejor de
+            <br /> <em>nuestra carta.</em>
+          </h2>
+          <p>Explora nuestra propuesta de brasa, parrillas y acompañamientos.</p>
+          <Link className="text-link" to="/carta">
+            Ver toda la carta <Icon name="arrow" />
           </Link>
-        ))}
-      </div>
-    </Section>
+          <small>Categorías de muestra</small>
+        </div>
+        <div className="category-gallery">
+          {categoriasInicio.map((item) => (
+            <Link key={item.nombre} to={`/carta?categoria=${encodeURIComponent(item.nombre)}`}>
+              <img
+                src={`/images/${item.imagen}.webp`}
+                width="720"
+                height={item.imagen.startsWith('catalogo') ? 720 : 540}
+                loading="lazy"
+                alt=""
+              />
+              <span>
+                {item.nombre}
+                <Icon name="arrow" />
+              </span>
+            </Link>
+          ))}
+        </div>
+      </Container>
+    </section>
   );
 }
 export function Promotions() {
   return (
-    <Section id="promociones" title="Más razones para compartir." eyebrow="PROMOCIONES">
-      <p className="sample-note">
-        Contenido de muestra. Consulta las promociones y precios vigentes por WhatsApp.
-      </p>
-      <div className="promotion-grid">
-        <article className="promotion-feature">
-          <div>
-            <Badge>Propuesta de muestra</Badge>
-            <h3>
-              La mesa sabe mejor
-              <br />
-              cuando estamos juntos.
-            </h3>
-            <p>Consulta las opciones para compartir con los tuyos.</p>
-            <ActionLink to={negocio.whatsapp}>CONSULTAR PROMOCIONES ↗</ActionLink>
-          </div>
-          <img
-            src="/images/brasa-640.webp"
-            width="640"
-            height="256"
-            loading="lazy"
-            alt="Imagen referencial de pollo a la brasa y acompañamientos"
-          />
-        </article>
-        <article className="promotion-aside">
-          <p className="eyebrow">TU PRÓXIMO PLAN</p>
-          <h3>
-            Una pausa.
-            <br />
-            Mucho sabor.
-          </h3>
-          <p>Escríbenos y descubre qué opciones tenemos hoy.</p>
-          <Link to="/contacto">
-            Hablemos <span aria-hidden="true">→</span>
-          </Link>
-        </article>
-      </div>
-    </Section>
-  );
-}
-export function About() {
-  return (
-    <Section
-      id="nosotros"
-      title="Una mesa. Buenas conversaciones. Mucho sabor."
-      eyebrow="SOMOS LEÑAS Y SABORES"
-    >
-      <div className="about-grid">
-        <div className="about-mark" aria-hidden="true">
-          <img src="/images/isotipo.webp" width="128" height="128" loading="lazy" alt="" />
-          <span>
-            LA BRASA
-            <br />
-            NOS REÚNE.
-          </span>
+    <section id="promociones" className="promotions-band" aria-labelledby="promotions-title">
+      <Container className="editorial-row">
+        <div className="section-intro">
+          <p className="eyebrow">PARA COMPARTIR</p>
+          <h2 id="promotions-title">
+            Más brasa.
+            <br /> <em>Más momentos.</em>
+          </h2>
+          <p>Elige tu próximo antojo y consulta las promociones vigentes.</p>
+          <ActionLink to="/promociones">
+            VER PROMOCIONES <Icon name="arrow" />
+          </ActionLink>
+          <small>Presentaciones de muestra · consulta precios</small>
         </div>
-        <div>
-          <p className="large-copy">
-            Nuestra propuesta reúne pollo a la brasa, parrillas y sabor peruano en Carabayllo.
-          </p>
-          <p>
-            Ven con la familia, comparte una mesa con amigos o disfruta la brasa donde prefieras.
-            Leñas y Sabores es una invitación a reunirnos alrededor de la comida.
-          </p>
-          <div className="brand-values">
-            <span>Brasa</span>
-            <span>Sabor peruano</span>
-            <span>Para compartir</span>
-          </div>
-          <Link className="text-link" to="/locales">
-            Conoce nuestro local →
-          </Link>
+        <div className="product-grid">
+          {productosMuestra.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
-      </div>
-    </Section>
+      </Container>
+    </section>
   );
 }
 export function ProductCard({ product }: { product: (typeof productosMuestra)[number] }) {
   return (
     <article className="product-card">
-      <div className={`product-visual ${product.imagen ? '' : 'illustration'}`}>
-        {product.imagen ? (
-          <img
-            src="/images/brasa-640.webp"
-            width="640"
-            height="256"
-            loading="lazy"
-            alt="Imagen referencial de pollo a la brasa, papas y ensalada"
-          />
-        ) : (
-          <>
-            <img src="/images/isotipo.webp" width="64" height="64" loading="lazy" alt="" />
-            <span>La brasa inspira</span>
-          </>
-        )}
+      <div className="product-visual">
+        <img
+          src={`/images/${product.imagen}.webp`}
+          width="720"
+          height="720"
+          loading="lazy"
+          alt={`Presentación referencial de ${product.nombre.toLowerCase()}`}
+        />
         <Badge>Muestra</Badge>
       </div>
       <div className="product-copy">
-        <p className="eyebrow">{product.categoria}</p>
         <h3>{product.nombre}</h3>
         <p>{product.descripcion}</p>
-        <a href={negocio.whatsapp} className="text-link">
-          Consultar disponibilidad →
+        <a href={negocio.whatsapp} className="product-action">
+          CONSULTAR <Icon name="arrow" />
         </a>
       </div>
     </article>
@@ -131,10 +91,7 @@ export function ProductCard({ product }: { product: (typeof productosMuestra)[nu
 export function FeaturedProducts() {
   return (
     <Section id="destacados" title="El sabor en primer plano." eyebrow="SELECCIÓN DE MUESTRA">
-      <p className="sample-note">
-        Presentaciones ilustrativas, sin precios oficiales. La oferta final se confirmará con el
-        restaurante.
-      </p>
+      <p className="sample-note">Presentaciones ilustrativas. Consulta disponibilidad y precios.</p>
       <div className="product-grid">
         {productosMuestra.map((product) => (
           <ProductCard key={product.id} product={product} />
@@ -143,48 +100,164 @@ export function FeaturedProducts() {
     </Section>
   );
 }
-export function Services() {
-  const modes = [
-    ['01', 'En nuestro local', 'Una mesa para compartir en Carabayllo.'],
-    ['02', 'Delivery propio', 'Consulta cobertura y disponibilidad antes de ordenar.'],
-    ['03', 'Recojo en tienda', 'Coordina tu recojo directamente con el restaurante.'],
-    ['04', 'Para llevar', 'Disfruta la brasa donde prefieras.'],
-  ];
+export function About() {
   return (
-    <Section id="modalidades" title="Tu mesa, donde tú quieras." eyebrow="FORMAS DE ATENCIÓN">
-      <div className="service-grid">
-        {modes.map(([number, title, copy]) => (
-          <article key={number}>
-            <span>{number}</span>
-            <h3>{title}</h3>
-            <p>{copy}</p>
-          </article>
-        ))}
+    <Section id="nosotros" title="La brasa nos reúne." eyebrow="SOMOS LEÑAS Y SABORES">
+      <div className="about-grid">
+        <div className="about-mark">
+          <img
+            src="/images/cat-combos.webp"
+            width="720"
+            height="540"
+            loading="lazy"
+            alt="Pollo a la brasa con papas, ensalada y salsas, imagen proporcionada para la web"
+          />
+        </div>
+        <div>
+          <p className="large-copy">Pollo a la brasa, parrillas y sabor peruano en Carabayllo.</p>
+          <p>
+            Una invitación a reunirnos alrededor de la comida. Ven con la familia, comparte con
+            amigos o disfruta la brasa donde prefieras.
+          </p>
+          <div className="brand-values">
+            <span>Brasa</span>
+            <span>Sabor peruano</span>
+            <span>Para compartir</span>
+          </div>
+          <Link className="text-link" to="/locales">
+            Conoce nuestro local <Icon name="arrow" />
+          </Link>
+        </div>
       </div>
     </Section>
   );
+}
+export function Benefits() {
+  const items = [
+    {
+      icon: 'flame',
+      title: 'Sabor peruano',
+      copy: 'Pollo a la brasa y parrillas para tu próximo antojo.',
+    },
+    {
+      icon: 'people',
+      title: 'Para compartir',
+      copy: 'Una buena razón para reunirnos alrededor de la mesa.',
+    },
+    {
+      icon: 'truck',
+      title: 'Donde prefieras',
+      copy: 'Delivery, recojo y para llevar. Consulta disponibilidad.',
+    },
+    {
+      icon: 'pin',
+      title: 'Estamos cerca',
+      copy: 'Visítanos en nuestro local de Carabayllo, Lima.',
+    },
+  ] as const;
+  return (
+    <section id="modalidades" className="benefits-band" aria-labelledby="benefits-title">
+      <Container className="editorial-row">
+        <div className="section-intro">
+          <h2 id="benefits-title">
+            La brasa
+            <br />
+            <em>nos reúne.</em>
+          </h2>
+          <p>Sabor peruano y momentos para disfrutar a tu manera.</p>
+          <Link className="text-link" to="/nosotros">
+            Conócenos <Icon name="arrow" />
+          </Link>
+        </div>
+        <div className="benefit-grid">
+          {items.map((item) => (
+            <article key={item.title}>
+              <span className="benefit-icon">
+                <Icon name={item.icon} />
+              </span>
+              <h3>{item.title}</h3>
+              <p>{item.copy}</p>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
+}
+export function Services() {
+  return <Benefits />;
 }
 export function LocationSection() {
   const mapUrl =
     'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(negocio.direccion);
   return (
-    <Section id="local" title="Nos vemos en Carabayllo." eyebrow="LOCAL Y CONTACTO">
-      <div className="location-grid">
+    <section id="local" className="location-band" aria-labelledby="location-title">
+      <Container className="location-grid">
         <div>
-          <h3>Leñas y Sabores</h3>
-          <address>{negocio.direccion}</address>
-          <a className="text-link" href={mapUrl}>
-            CÓMO LLEGAR ↗
-          </a>
+          <p className="eyebrow">TE ESPERAMOS</p>
+          <h2 id="location-title">
+            Tu punto de encuentro.
+            <br />
+            <em>Carabayllo.</em>
+          </h2>
+          <p className="location-intro">Ven y comparte el sabor de Leñas y Sabores.</p>
+          <div className="location-details">
+            <div>
+              <Icon name="pin" />
+              <div>
+                <h3>Leñas y Sabores</h3>
+                <address>{negocio.direccion}</address>
+              </div>
+            </div>
+            <div>
+              <Icon name="clock" />
+              <div>
+                <h3>Horario de atención</h3>
+                <p>{negocio.horario}</p>
+              </div>
+            </div>
+          </div>
+          <div className="location-actions">
+            <ActionLink to={mapUrl}>
+              CÓMO LLEGAR <Icon name="arrow" />
+            </ActionLink>
+            <a className="text-link" href={negocio.whatsapp}>
+              Escríbenos por WhatsApp <Icon name="arrow" />
+            </a>
+          </div>
+          <div className="location-phones">
+            <a href="tel:+51947540597">{negocio.telefono}</a>
+            <a href="tel:+51972193346">{negocio.adicional}</a>
+          </div>
         </div>
+        <figure className="location-photo">
+          <img
+            src="/images/cat-parrillas.webp"
+            width="720"
+            height="540"
+            loading="lazy"
+            alt="Parrilla con carnes y verduras, recurso gastronómico proporcionado"
+          />
+          <figcaption>La brasa nos reúne · imagen referencial</figcaption>
+        </figure>
+      </Container>
+    </section>
+  );
+}
+export function CallToAction() {
+  return (
+    <section className="closing-banner" aria-labelledby="closing-title">
+      <Container>
         <div>
-          <p className="eyebrow">HORARIO DE ATENCIÓN</p>
-          <p className="hours">{negocio.horario}</p>
-          <a href="tel:+51947540597">{negocio.telefono}</a>
-          <a href="tel:+51972193346">{negocio.adicional}</a>
-          <ActionLink to={negocio.whatsapp}>CONVERSAR POR WHATSAPP ↗</ActionLink>
+          <h2 id="closing-title">
+            ¿Listo para <em>disfrutar?</em>
+          </h2>
+          <p>Consulta nuestra carta y coordina tu pedido con el restaurante.</p>
         </div>
-      </div>
-    </Section>
+        <ActionLink to={negocio.whatsapp}>
+          <Icon name="truck" /> ORDENAR AHORA <Icon name="arrow" />
+        </ActionLink>
+      </Container>
+    </section>
   );
 }
