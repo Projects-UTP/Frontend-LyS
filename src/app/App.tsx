@@ -19,6 +19,7 @@ const Mesas = lazy(() => import('@/features/operativo/Mesas').then((m) => ({ def
 const MesaDetalle = lazy(() =>
   import('@/features/operativo/MesaDetalle').then((m) => ({ default: m.MesaDetalle })),
 );
+const Caja = lazy(() => import('@/features/operativo/Caja').then((m) => ({ default: m.Caja })));
 import { Carta, DetalleProducto } from '@/features/catalogo/Catalogo';
 const RegistroCliente = lazy(() =>
   import('@/features/autenticacion/Registro').then((m) => ({ default: m.RegistroCliente })),
@@ -48,6 +49,7 @@ export function App() {
               <Route index element={<Mesas />} />
               <Route path="mesas" element={<Mesas />} />
               <Route path="mesa/:id" element={<MesaDetalle />} />
+              <Route path="caja" element={<Caja />} />
             </Route>
             <Route element={<Layout />}>
               <Route index element={<Home />} />
