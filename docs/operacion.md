@@ -19,3 +19,9 @@ Una conexión del SDK comparte la sesión Auth en memoria y se suscribe únicame
 Cada evento valida ámbito/revisión, consulta una sola orden autorizada y actualiza sus tarjetas/mapa. Duplicados y respuestas antiguas no retroceden estados. No vuelve a cargar todas las órdenes por evento. Al reconectar o volver a la pestaña consulta el ámbito activo; si falla la conexión, fallback cada 30 segundos solo visible y actualización manual. Aviso de listos visible al mozo, sin fabricar una notificación de cocina.
 
 Consola registra únicamente códigos de fallo de RPC o conexión, sin errores del proveedor ni contactos, referencias o tokens. Pruebas de navegador emulan Socket.IO y no demuestran entrega real a personal aún no provisionado; la conexión WebSocket real anónima fue rechazada en lys-validacion.
+
+## Anulaciones administrativas
+
+`/operativo/anulaciones` requiere ADMINISTRADOR del local tanto en la interfaz como en las RPC/RLS. Busca por código humano y consulta datos mínimos del pago. Motivo de 3–400 caracteres y confirmación explícita obligatorios; solo antes de preparación y con la sesión abierta. Conserva registro, actor, fecha y motivo; no elimina movimientos ni acredita una devolución. Los fondos anulados permanecen en los importes esperados hasta su conciliación. Tras el resultado se consulta de nuevo el servidor. Un cajero sin asignación administrativa no tiene acceso. Playwright verifica el cobro previo, anulación, conservación del pago/fondos y móvil/escritorio; PostgreSQL verifica las prohibiciones y la transacción.
+
+El detalle de cobro consulta `consultar_orden_operativa` para obtener la información vigente autorizada. El método previsto del pedido web no confirma el método recibido. La prueba de red anónima también comprobó el proxy WebSocket local: conectado y suscripción privada rechazada `REALTIME_UNAUTHORIZED`.

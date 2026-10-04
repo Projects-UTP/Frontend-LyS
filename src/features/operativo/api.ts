@@ -93,7 +93,7 @@ export function useOrdenOperativa(id: string) {
   return useQuery({
     queryKey: ['operativo', 'orden', local, usuario, id],
     enabled: !!local && !!id,
-    queryFn: () => rpcOperativo<Orden | null>('orden_operativa', { p_id: id }),
+    queryFn: () => rpcOperativo<Orden | null>('consultar_orden_operativa', { p_id: id }),
     staleTime: 0,
   });
 }

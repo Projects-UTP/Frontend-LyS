@@ -20,6 +20,9 @@ const MesaDetalle = lazy(() =>
   import('@/features/operativo/MesaDetalle').then((m) => ({ default: m.MesaDetalle })),
 );
 const Caja = lazy(() => import('@/features/operativo/Caja').then((m) => ({ default: m.Caja })));
+const Anulaciones = lazy(() =>
+  import('@/features/operativo/Anulaciones').then((m) => ({ default: m.Anulaciones })),
+);
 const Cocina = lazy(() =>
   import('@/features/operativo/Cocina').then((m) => ({ default: m.Cocina })),
 );
@@ -59,6 +62,7 @@ export function App() {
               <Route path="mesas" element={<Mesas />} />
               <Route path="mesa/:id" element={<MesaDetalle />} />
               <Route path="caja" element={<Caja />} />
+              <Route path="anulaciones" element={<Anulaciones />} />
               <Route path="cocina" element={<Cocina />} />
               <Route path="listos" element={<Listos />} />
             </Route>
