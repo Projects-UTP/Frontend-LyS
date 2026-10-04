@@ -5,6 +5,11 @@ import { fileURLToPath, URL } from 'node:url';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), 'VITE_');
   const proxy = {
+    '/socket.io': {
+      target: env.VITE_INSFORGE_URL || 'https://4rdisy8j.us-east.insforge.app',
+      changeOrigin: true,
+      ws: true,
+    },
     '/insforge': {
       target: env.VITE_INSFORGE_URL || 'https://4rdisy8j.us-east.insforge.app',
       changeOrigin: true,

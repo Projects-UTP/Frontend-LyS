@@ -29,6 +29,8 @@ export type Orden = {
   observaciones: string;
   created_at: string;
   mozo_nombre?: string | null;
+  cliente?: string | null;
+  metodo_previsto?: string | null;
   paid_at?: string | null;
   confirmed_at?: string | null;
   preparation_started_at?: string | null;
