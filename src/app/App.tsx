@@ -16,6 +16,9 @@ const OperativoLayout = lazy(() =>
   import('@/features/operativo/OperativoLayout').then((m) => ({ default: m.OperativoLayout })),
 );
 const Mesas = lazy(() => import('@/features/operativo/Mesas').then((m) => ({ default: m.Mesas })));
+const MesaDetalle = lazy(() =>
+  import('@/features/operativo/MesaDetalle').then((m) => ({ default: m.MesaDetalle })),
+);
 import { Carta, DetalleProducto } from '@/features/catalogo/Catalogo';
 const RegistroCliente = lazy(() =>
   import('@/features/autenticacion/Registro').then((m) => ({ default: m.RegistroCliente })),
@@ -44,6 +47,7 @@ export function App() {
             <Route path="operativo" element={<OperativoLayout />}>
               <Route index element={<Mesas />} />
               <Route path="mesas" element={<Mesas />} />
+              <Route path="mesa/:id" element={<MesaDetalle />} />
             </Route>
             <Route element={<Layout />}>
               <Route index element={<Home />} />

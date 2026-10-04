@@ -13,6 +13,53 @@ export type Mesa = {
   demostracion: boolean;
   activo: boolean;
 };
+export type Orden = {
+  id: string;
+  codigo: string;
+  local_id: string;
+  mesa_id: string | null;
+  mozo_id: string | null;
+  modalidad: string;
+  estado_pedido: string;
+  estado_pago: string;
+  revision: number;
+  subtotal: number;
+  total: number | null;
+  demostracion: boolean;
+  observaciones: string;
+  created_at: string;
+  mesa: { numero: number; nombre: string; estado: string } | null;
+  items: {
+    producto_id: string;
+    nombre_producto: string;
+    cantidad: number;
+    precio_unitario: number;
+    subtotal: number;
+    observaciones: string;
+  }[];
+};
+export type OrdenMesa = {
+  mesa_id: string;
+  codigo: string;
+  estado_pedido: string;
+  estado_pago: string;
+};
+export function useOrdenesMesa() {
+  const { local, usuario } = useOperativo();
+  return useQuery({
+    queryKey: ['operativo', 'ordenes-mesa', local, usuario],
+    enabled: !!local,
+    queryFn: () => rpcOperativo<OrdenMesa[]>('listar_pedidos_mesa', { p_local: local }),
+  });
+}
+export function useOrdenMesa(mesa: string) {
+  const { local, usuario } = useOperativo();
+  return useQuery({
+    queryKey: ['operativo', 'mesa', local, usuario, mesa],
+    enabled: !!local && !!mesa,
+    queryFn: () => rpcOperativo<Orden | null>('pedido_de_mesa', { p_mesa: mesa }),
+  });
+}
 export async function rpcOperativo<T>(nombre: string, args: Record<string, unknown>): Promise<T> {
   const { data, error } = await crearClienteInsforge().database.rpc(nombre, args);
   if (error) {

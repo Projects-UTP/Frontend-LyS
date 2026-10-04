@@ -175,6 +175,109 @@
 .op-header label {
   min-width: 0;
 }
+.op-card {
+  padding: 1.4rem;
+  border: 1px solid #d4d4d4;
+  border-radius: 12px;
+  background: white;
+  margin: 1rem 0;
+  min-width: 0;
+}
+.op-card h2 {
+  margin-top: 0;
+}
+.op-order-heading {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 1rem 0;
+}
+.op-order-heading > strong {
+  font-size: 1.65rem;
+}
+.op-primary {
+  background: #c81018 !important;
+  color: white !important;
+  border-color: #c81018 !important;
+}
+.op-editor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.2rem;
+}
+.op-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  gap: 0.75rem;
+}
+.op-products button {
+  display: grid;
+  gap: 0.6rem;
+  text-align: left;
+  min-height: 95px;
+}
+.op-edit-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1rem;
+}
+.op-quantity {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0.75rem 0;
+}
+.op-quantity output {
+  min-width: 2rem;
+  text-align: center;
+  font-weight: 700;
+}
+.op-items {
+  padding: 0;
+  list-style: none;
+}
+.op-items li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #ddd;
+}
+.op-items li p {
+  margin: 0.4rem 0;
+  color: #5e5e5e;
+}
+.op-observation {
+  padding: 0.65rem;
+  background: #fff0d6;
+  color: #714500 !important;
+  border-left: 3px solid #89540a;
+  overflow-wrap: anywhere;
+}
+.op-total {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+.op-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.op-card input,
+.op-card textarea {
+  width: 100%;
+  min-width: 0;
+}
+.op-card > p {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 900px) {
+  .op-editor {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
 @media (max-width: 600px) {
   .op-table-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));

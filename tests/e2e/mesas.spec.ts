@@ -11,6 +11,7 @@ export async function loginPersonal(page: Page) {
 test('mapa de mesas responsive, filtros y paginación configurable', async ({ page }) => {
   test.setTimeout(60000);
   await authFixture(page);
+  await page.route('**/api/database/rpc/listar_pedidos_mesa', (r) => r.fulfill({ json: [] }));
   await page.route('**/api/database/records/locales**', (r) => r.fulfill({ json: [localDemo] }));
   await page.route('**/api/database/records/empleados**', (r) =>
     r.fulfill({ json: [{ local_id: localDemo.id, rol: 'MOZO' }] }),

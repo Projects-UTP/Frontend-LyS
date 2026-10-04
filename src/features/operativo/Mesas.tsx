@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useMesas } from './api';
+import { useMesas, useOrdenesMesa } from './api';
 import { useOperativo } from './context';
 export function Mesas() {
   const query = useMesas(),
     { roles } = useOperativo();
+  const ordenes = useOrdenesMesa();
   const [zona, setZona] = useState(''),
     [estado, setEstado] = useState(''),
     [limite, setLimite] = useState(50);
@@ -24,7 +25,13 @@ export function Mesas() {
           <p className="op-kicker">SALÓN</p>
           <h1>Mesas del local</h1>
         </div>
-        <button disabled={query.isFetching} onClick={() => void query.refetch()}>
+        <button
+          disabled={query.isFetching || ordenes.isFetching}
+          onClick={() => {
+            void query.refetch();
+            void ordenes.refetch();
+          }}
+        >
           Actualizar mesas
         </button>
       </div>
@@ -32,6 +39,11 @@ export function Mesas() {
         <p className="op-notice">
           Distribución de demostración. Mesas y zonas configurables; aforo pendiente de
           confirmación.
+        </p>
+      )}
+      {ordenes.error && (
+        <p role="alert">
+          {ordenes.error.message} Usa Actualizar mesas para recuperar los códigos activos.
         </p>
       )}
       <div className="op-filters">
@@ -86,6 +98,13 @@ export function Mesas() {
               <strong>{m.nombre}</strong>
               <span className="op-badge">{m.estado.replaceAll('_', ' ')}</span>
               {m.capacidad && <small>{m.capacidad} personas</small>}
+              {ordenes.data
+                ?.filter((p) => p.mesa_id === m.id)
+                .map((p) => (
+                  <small key={p.codigo}>
+                    {p.codigo} · {p.estado_pedido.replaceAll('_', ' ')}
+                  </small>
+                ))}
             </Link>
           ))}
         </div>
