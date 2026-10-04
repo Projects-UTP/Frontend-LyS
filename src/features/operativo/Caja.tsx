@@ -373,7 +373,12 @@ function CobrarOrden({
       <p>
         {p.mesa?.nombre ?? p.modalidad.replaceAll('_', ' ')} · Pago {p.estado_pago.toLowerCase()}
       </p>
-      {cliente && <p>Cliente: {cliente}</p>}
+      {(p.cliente || cliente) && <p>Cliente: {p.cliente || cliente}</p>}
+      {p.metodo_previsto && (
+        <p>
+          Método previsto: {p.metodo_previsto.replaceAll('_', ' ')}. Confirma el método recibido.
+        </p>
+      )}
       {p.demostracion && (
         <p className="op-notice">
           Orden y precios de demostración. Verifica el entorno antes de registrar un cobro.

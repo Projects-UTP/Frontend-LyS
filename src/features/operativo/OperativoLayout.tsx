@@ -87,6 +87,7 @@ export function OperativoLayout() {
             <Link to="/operativo/listos">Pedidos listos</Link>
           )}
           <Link to="/mi-cuenta">Mi cuenta</Link>
+          {roles.includes('ADMINISTRADOR') && <Link to="/operativo/anulaciones">Anulaciones</Link>}
         </nav>
         <main id="operacion" className="op-shell">
           <ActualizacionOperativa key={`${local}:${auth.usuario.id}`} />
