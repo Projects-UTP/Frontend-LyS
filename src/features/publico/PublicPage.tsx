@@ -2,6 +2,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { Container, ActionLink } from '@/shared/ui';
 import { About, Promotions, LocationSection, ProductCard } from './Sections';
 import { negocio, productosMuestra } from './contenido';
+import { BaksoText } from '@/shared/ui/BaksoText';
 const titles = {
   carta: 'Nuestra carta de muestra.',
   promociones: 'Un buen plan empieza aquí.',
@@ -18,7 +19,9 @@ export function PublicPage({ page }: { page: keyof typeof titles }) {
       <div className="page-heading">
         <Container>
           <p className="eyebrow">LEÑAS Y SABORES · {page.toUpperCase()}</p>
-          <h1>{titles[page]}</h1>
+          <h1>
+            <BaksoText text={titles[page]} />
+          </h1>
         </Container>
       </div>
       {page === 'carta' ? (

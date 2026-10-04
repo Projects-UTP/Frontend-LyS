@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ActionLink, Badge, Section, Container } from '@/shared/ui';
 import { categoriasInicio, negocio, productosMuestra } from './contenido';
 import { Icon } from './Icon';
+import { BaksoText } from '@/shared/ui/BaksoText';
 
 export function Categories() {
   return (
@@ -10,8 +11,11 @@ export function Categories() {
         <div className="section-intro">
           <p className="eyebrow">NUESTROS IMPERDIBLES</p>
           <h2 id="categories-title">
-            Lo mejor de
-            <br /> <em>nuestra carta.</em>
+            <BaksoText text="Lo mejor de" />
+            <br />{' '}
+            <em>
+              <BaksoText text="nuestra carta." />
+            </em>
           </h2>
           <p>Explora nuestra propuesta de brasa, parrillas y acompañamientos.</p>
           <Link className="text-link" to="/carta">
@@ -47,8 +51,11 @@ export function Promotions() {
         <div className="section-intro">
           <p className="eyebrow">PARA COMPARTIR</p>
           <h2 id="promotions-title">
-            Más brasa.
-            <br /> <em>Más momentos.</em>
+            <BaksoText text="Más brasa." />
+            <br />{' '}
+            <em>
+              <BaksoText text="Más momentos." />
+            </em>
           </h2>
           <p>Elige tu próximo antojo y consulta las promociones vigentes.</p>
           <ActionLink to="/promociones">
@@ -160,9 +167,11 @@ export function Benefits() {
       <Container className="editorial-row">
         <div className="section-intro">
           <h2 id="benefits-title">
-            La brasa
+            <BaksoText text="La brasa" />
             <br />
-            <em>nos reúne.</em>
+            <em>
+              <BaksoText text="nos reúne." />
+            </em>
           </h2>
           <p>Sabor peruano y momentos para disfrutar a tu manera.</p>
           <Link className="text-link" to="/nosotros">
@@ -196,9 +205,11 @@ export function LocationSection() {
         <div>
           <p className="eyebrow">TE ESPERAMOS</p>
           <h2 id="location-title">
-            Tu punto de encuentro.
+            <BaksoText text="Tu punto de encuentro." />
             <br />
-            <em>Carabayllo.</em>
+            <em>
+              <BaksoText text="Carabayllo." />
+            </em>
           </h2>
           <p className="location-intro">Ven y comparte el sabor de Leñas y Sabores.</p>
           <div className="location-details">
@@ -250,7 +261,10 @@ export function CallToAction() {
       <Container>
         <div>
           <h2 id="closing-title">
-            ¿Listo para <em>disfrutar?</em>
+            <BaksoText text="¿Listo para" />{' '}
+            <em>
+              <BaksoText text="disfrutar?" />
+            </em>
           </h2>
           <p>Consulta nuestra carta y coordina tu pedido con el restaurante.</p>
         </div>

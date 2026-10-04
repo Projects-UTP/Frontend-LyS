@@ -1,8 +1,45 @@
 /* Composición inspirada en la referencia del usuario, con recursos y datos propios. */
 :root {
-  --font-editorial: 'Bakso Sapi', Georgia, 'Times New Roman', serif;
   --cream: #fcf7f0;
   --line: #eee5dc;
+}
+.bakso-title {
+  display: inline-block;
+  max-width: 100%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+.bakso-art {
+  display: block;
+  max-width: 100%;
+  background: currentColor;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+.bakso-accessible {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (forced-colors: active) {
+  .bakso-art {
+    display: none;
+  }
+  .bakso-accessible {
+    position: static;
+    width: auto;
+    height: auto;
+    clip-path: none;
+    white-space: normal;
+  }
+  .bakso-title {
+    line-height: inherit;
+  }
 }
 svg {
   width: 1.25rem;
@@ -124,9 +161,9 @@ svg {
   padding-block: 4rem 3rem;
 }
 .eyebrow {
-  font-family: var(--font-body);
-  font-size: 0.65rem;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 400;
   letter-spacing: 0.16em;
   display: flex;
   align-items: center;
@@ -141,8 +178,8 @@ svg {
   flex-shrink: 0;
 }
 .hero h1 {
-  font-family: var(--font-editorial);
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-weight: 400;
   font-size: clamp(3rem, 4.6vw, 4.8rem);
   line-height: 0.98;
   letter-spacing: -0.045em;
@@ -188,7 +225,7 @@ h2 em {
 }
 .section-intro h2,
 .location-band h2 {
-  font-family: var(--font-editorial);
+  font-family: var(--font-display);
   font-size: 2.55rem;
   font-weight: 700;
   line-height: 1.05;
@@ -265,9 +302,9 @@ h2 em {
   padding: 1rem;
 }
 .product-copy h3 {
-  font-family: var(--font-editorial);
-  font-size: 1.3rem;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 400;
   line-height: 1.2;
   margin-bottom: 0.5rem;
 }
@@ -330,10 +367,10 @@ h2 em {
   gap: 0.35rem;
   min-height: 54px;
   padding: 0.65rem;
-  font-family: var(--font-editorial);
-  font-size: 0.9rem;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
   line-height: 1.2;
-  font-weight: 700;
+  font-weight: 400;
   hyphens: auto;
 }
 .category-gallery svg {
@@ -372,9 +409,9 @@ h2 em {
   height: 1.8rem;
 }
 .benefit-grid h3 {
-  font-family: var(--font-editorial);
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 400;
   line-height: 1.2;
   margin-bottom: 0.5rem;
 }
@@ -494,11 +531,14 @@ h2 em {
   padding-left: 25%;
 }
 .closing-banner h2 {
-  font-family: var(--font-editorial);
+  font-family: var(--font-display);
   font-size: 2.1rem;
   font-weight: 700;
   line-height: 1.1;
   margin-bottom: 0.5rem;
+}
+.closing-banner h2 em .bakso-title {
+  margin-left: 0.2em;
 }
 .closing-banner p {
   font-size: 0.8rem;
@@ -540,8 +580,8 @@ h2 em {
   font-size: 0.8rem;
 }
 .section-title {
-  font-family: var(--font-editorial);
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.03em;
 }
@@ -600,8 +640,8 @@ h2 em {
   padding-block: 3.5rem;
 }
 .page-heading h1 {
-  font-family: var(--font-editorial);
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-weight: 400;
   line-height: 1.1;
   font-size: clamp(2rem, 4vw, 3.5rem);
 }
@@ -621,8 +661,8 @@ h2 em {
   border-radius: 1rem;
 }
 .empty-state h2 {
-  font-family: var(--font-editorial);
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-weight: 400;
   font-size: 1.75rem;
 }
 .empty-state p {

@@ -4,8 +4,8 @@
   --radius-card: 1rem;
   --shadow-card: 0 10px 35px rgb(23 23 23 / 6%);
   --content-width: 76rem;
-  /* Bakso Sapi se activará al disponer de un archivo con licencia web verificada. */
-  --font-display: 'Bakso Sapi', 'Arial Black', sans-serif;
+  /* Los titulares de Bakso usan arte estático; el texto de reserva usa Bebas. */
+  --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
   --font-heading: 'Bebas Neue', 'Arial Narrow', sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --color-brand-red-50: #fbeaec;
