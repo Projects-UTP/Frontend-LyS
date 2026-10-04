@@ -69,6 +69,12 @@
   font-weight: 600;
   cursor: pointer;
 }
+.op-app input,
+.op-app select,
+.op-app textarea {
+  color: #171717;
+  background: #ffffff;
+}
 .op-app button:disabled {
   opacity: 0.6;
   cursor: wait;
