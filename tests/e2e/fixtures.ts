@@ -51,6 +51,9 @@ export const productosDemo = [
 ];
 // Fixtures deterministas en CI; la integración real se comprueba por separado.
 export async function catalogoFixture(page: Page) {
+  await page.route('**/api/auth/refresh**', (r) =>
+    r.fulfill({ status: 401, json: { message: 'Sin sesión', statusCode: 401 } }),
+  );
   await page.route('**/api/database/records/categorias**', (r) =>
     r.fulfill({ json: categoriasDemo }),
   );
