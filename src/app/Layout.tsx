@@ -19,6 +19,7 @@ export function Layout() {
       '/iniciar-sesion': 'Iniciar sesión',
       '/mi-cuenta': 'Mi cuenta',
       '/recuperar-acceso': 'Recuperar acceso',
+      '/carrito': 'Carrito',
     };
     const dynamic = location.pathname.startsWith('/carta/');
     document.title = `${titles[location.pathname] ?? (dynamic ? 'Detalle de producto' : 'Página no encontrada')} | Leñas y Sabores`;

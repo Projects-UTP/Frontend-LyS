@@ -5,6 +5,9 @@ import { Home } from '@/features/publico/Home';
 import { NotFound } from '@/features/publico/NotFound';
 import { PublicPage } from '@/features/publico/PublicPage';
 import { Providers } from './Providers';
+const Carrito = lazy(() =>
+  import('@/features/carrito/Carrito').then((m) => ({ default: m.Carrito })),
+);
 import { Carta, DetalleProducto } from '@/features/catalogo/Catalogo';
 const RegistroCliente = lazy(() =>
   import('@/features/autenticacion/Registro').then((m) => ({ default: m.RegistroCliente })),
@@ -33,6 +36,7 @@ export function App() {
             <Route element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="carta" element={<Carta />} />
+              <Route path="carrito" element={<Carrito />} />
               <Route path="carta/:slug" element={<DetalleProducto />} />
               <Route path="registro" element={<RegistroCliente />} />
               <Route path="iniciar-sesion" element={<IniciarSesion />} />

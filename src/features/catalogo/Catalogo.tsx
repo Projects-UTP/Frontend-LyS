@@ -4,6 +4,7 @@ import { BaksoText } from '@/shared/ui/BaksoText';
 import { negocio } from '@/features/publico/contenido';
 import { useSeo } from '@/shared/lib/seo';
 import { normalizar, soles, useCategorias, useProducto, useProductos, type Producto } from './api';
+import { useCarrito } from '@/features/carrito/store';
 
 export function FotoProducto({ producto, eager = false }: { producto: Producto; eager?: boolean }) {
   const url = producto.imagen_url ?? '/images/imagotipo.webp';
@@ -48,6 +49,8 @@ function Estado({
   return null;
 }
 export function Carta() {
+  const agregar = useCarrito((s) => s.agregar);
+  const mensaje = useCarrito((s) => s.mensaje);
   useSeo(
     'Carta de demostración',
     'Explora categorías, productos y precios referenciales de Leñas y Sabores en Carabayllo.',
@@ -87,6 +90,9 @@ export function Carta() {
         <p className="demo-banner">
           Carta de demostración: productos, fotografías y precios referenciales. No representa una
           oferta comercial vigente.
+        </p>
+        <p role="status" className="cart-feedback">
+          {mensaje}
         </p>
         <div className="catalog-tools">
           <label htmlFor="buscar-carta">
@@ -154,6 +160,14 @@ export function Carta() {
                         <small>{p.disponible ? 'Disponible · demo' : 'No disponible'}</small>
                       </div>
                       <ActionLink to={`/carta/${p.slug}`}>VER PRODUCTO</ActionLink>
+                      <button
+                        className="action action-outline"
+                        disabled={!p.disponible}
+                        onClick={() => agregar(p)}
+                        aria-label={`Agregar ${p.nombre} al carrito`}
+                      >
+                        AGREGAR
+                      </button>
                     </div>
                   </article>
                 ))}
@@ -172,6 +186,8 @@ export function Carta() {
   );
 }
 export function DetalleProducto() {
+  const agregar = useCarrito((s) => s.agregar);
+  const mensaje = useCarrito((s) => s.mensaje);
   const { slug = '' } = useParams();
   const query = useProducto(slug);
   const categories = useCategorias();
@@ -206,6 +222,12 @@ export function DetalleProducto() {
                 <p>{p.descripcion}</p>
                 <p className="price">{soles(p.precio_base)}</p>
                 <p>{p.disponible ? 'Disponible para demostración' : 'No disponible actualmente'}</p>
+                <button className="action" disabled={!p.disponible} onClick={() => agregar(p)}>
+                  AGREGAR AL CARRITO
+                </button>
+                <p className="cart-feedback" role="status">
+                  {mensaje}
+                </p>
                 <ActionLink to={negocio.whatsapp}>CONSULTAR AL RESTAURANTE</ActionLink>
                 <p className="muted">Confirma la carta vigente con el restaurante.</p>
               </div>
