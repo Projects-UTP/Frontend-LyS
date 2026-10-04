@@ -73,6 +73,9 @@ export function OperativoLayout() {
           </button>
         </header>
         <nav className="op-nav" aria-label="Operación">
+          {roles.some((r) => ['CAJA', 'ADMINISTRADOR'].includes(r)) && (
+            <Link to="/operativo/caja">Caja</Link>
+          )}
           {roles.some((r) => ['MOZO', 'CAJA', 'ADMINISTRADOR'].includes(r)) && (
             <Link to="/operativo/mesas">Mesas</Link>
           )}
