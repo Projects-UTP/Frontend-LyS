@@ -12,7 +12,7 @@ WhatsApp y teléfonos utilizan los números confirmados. El enlace Cómo llegar 
 
 `src/features/publico/contenido.ts` centraliza datos del negocio y mocks reemplazables. Categorías, productos y promociones son **muestras**, sin precios, descuentos ni disponibilidad oficiales. Las imágenes de parrilla y anticuchos deben reemplazarse por fotos oficiales; actualmente se usa una ilustración del isotipo. No se inventaron historia, premios ni redes sociales.
 
-Banner e isotipo proporcionados por el usuario conservados en `src/assets`. Versiones WebP de desarrollo en `public/images`; banner de 1024 px: 95.7 kB; versión de 640 px: 37.1 kB; logo de 128 px: 8.5 kB. Imagen principal con prioridad alta y `srcset`; imágenes inferiores con lazy loading y dimensiones. Cloudinary queda pendiente de configuración para producción. Inter y Bebas Neue se sirven localmente; Bakso Sapi usa Arial Black hasta verificar archivo y licencia web.
+Banner e isotipo proporcionados por el usuario conservados en `src/assets`. Versiones WebP de desarrollo en `public/images`; banner de 1024 px: 95.7 kB; versión de 640 px: 37.1 kB; logo de 128 px: 8.5 kB. Imagen principal con prioridad alta y `srcset`; imágenes inferiores con lazy loading y dimensiones. Cloudinary queda pendiente de configuración para producción. Inter y Bebas Neue se sirven localmente; Bakso Sapi se presenta como arte rasterizado en los titulares principales; el archivo gratuito Desktop Only no se incrusta como webfont. Inter y Bebas Neue siguen locales.
 
 ## Verificación
 
@@ -25,7 +25,7 @@ Bundle inicial aproximado: JS 274 kB (87 kB gzip), CSS 16.6 kB (4.4 kB gzip). No
 ## Pendientes antes de producción
 
 - Carta, precios, disponibilidad, promociones y fotos oficiales.
-- Licencia web y archivo de Bakso Sapi; credenciales Cloudinary.
+- Licencia web de Bakso Sapi solo si se requiere texto dinámico con esa fuente; credenciales Cloudinary.
 - Redes sociales, textos legales, libro de reclamaciones y dominio.
 - Cinco avisos de seguridad de herramientas de desarrollo heredados de Tailwind 3; auditoría de dependencias de producción sin vulnerabilidades altas. Migración mayor requiere un cambio independiente.
 - Configurar fallback SPA en hosting para rutas directas. No se ha desplegado producción.

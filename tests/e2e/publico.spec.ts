@@ -3,6 +3,20 @@ import AxeBuilder from '@axe-core/playwright';
 test('Portada, imágenes y acciones reales', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('h1')).toHaveCount(1);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveAccessibleName(
+    'Sabor peruano en cada brasa.',
+  );
+  for (const art of await page.locator('.bakso-art').all()) {
+    const loaded = await art.evaluate(async (item) => {
+      const url = getComputedStyle(item).maskImage.match(/url\(["']?(.*?)["']?\)/)?.[1];
+      if (!url) return false;
+      const image = new Image();
+      image.src = url;
+      await image.decode();
+      return image.naturalWidth > 0 && item.getBoundingClientRect().height > 0;
+    });
+    expect(loaded).toBe(true);
+  }
   await expect(page.locator('.site-header .brand img')).toHaveAttribute(
     'src',
     '/images/imagotipo.webp',
