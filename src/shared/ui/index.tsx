@@ -1,5 +1,6 @@
 import type { ComponentProps, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { BaksoText } from './BaksoText';
 
 const actionClass = 'action';
 export function Button(props: ComponentProps<'button'>) {
@@ -49,7 +50,7 @@ export function Section({
       <Container>
         {eyebrow && <p className="eyebrow">{eyebrow}</p>}
         <h2 id={`${id}-title`} className="section-title">
-          {title}
+          <BaksoText text={title} />
         </h2>
         {children}
       </Container>

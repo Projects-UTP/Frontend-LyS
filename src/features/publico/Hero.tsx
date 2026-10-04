@@ -1,5 +1,6 @@
 import { ActionLink, Container } from '@/shared/ui';
 import { negocio } from './contenido';
+import { BaksoText } from '@/shared/ui/BaksoText';
 export function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-title">
@@ -7,8 +8,11 @@ export function Hero() {
         <div className="hero-copy">
           <p className="eyebrow">POLLOS & PARRILLAS · CARABAYLLO</p>
           <h1 id="hero-title">
-            Sabor peruano
-            <br /> <em>en cada brasa.</em>
+            <BaksoText text="Sabor peruano" />
+            <br />{' '}
+            <em>
+              <BaksoText text="en cada brasa." />
+            </em>
           </h1>
           <p className="hero-description">
             Pollo a la brasa, parrillas y una buena razón para reunirnos alrededor de la mesa.
