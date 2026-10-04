@@ -9,3 +9,7 @@ InsForge Auth mantiene el token de acceso en memoria y la sesión renovable en c
 El SDK 1.5.2 oculta errores HTTP de logout: se observa su transporte para comprobar la revocación antes de anunciar un cierre. Si falla, se conserva la identidad visible, se intenta restaurar la sesión y se solicita reintentar. Un cierre confirmado elimina las consultas privadas.
 
 Las pruebas de navegador usan cuentas, códigos y tokens sintéticos calculados en ejecución; no son evidencia de entrega de correo. La entrega y recepción externa requieren un buzón de prueba controlado. Las pruebas SQL de acceso a otro perfil se ejecutan en PostgreSQL efímero de CI, sin manipular el esquema administrado de Auth en LYS.
+
+`/iniciar-sesion` valida correo/contraseña, bloquea envíos simultáneos y presenta errores legibles. Un correo pendiente puede verificar su código y completar el perfil. El retorno admite exclusivamente rutas internas. La cabecera muestra Ingresar/Mi cuenta. Las rutas de cuenta llevan noindex.
+
+HU-AUT-002/003: pruebas de credenciales inválidas, redirección externa rechazada, cierre HTTP 503 sin falsa confirmación, cierre correcto y recarga sin sesión. Perfil/login cuentan con capturas deterministas.
