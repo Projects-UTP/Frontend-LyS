@@ -8,7 +8,7 @@ export function Footer() {
       <Container>
         <div className="footer-grid">
           <div>
-            <Brand />
+            <Brand light />
             <p>
               Sabor peruano.
               <br />

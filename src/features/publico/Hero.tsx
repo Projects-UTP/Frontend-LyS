@@ -5,10 +5,10 @@ export function Hero() {
     <section className="hero" aria-labelledby="hero-title">
       <Container className="hero-grid">
         <div className="hero-copy">
-          <p className="eyebrow">CARABAYLLO, LIMA · SABOR PERUANO</p>
+          <p className="eyebrow">POLLOS & PARRILLAS · CARABAYLLO</p>
           <h1 id="hero-title">
-            Sabor que nace
-            <br /> de las <em>brasas.</em>
+            Sabor peruano
+            <br /> <em>en cada brasa.</em>
           </h1>
           <p className="hero-description">
             Pollo a la brasa, parrillas y una buena razón para reunirnos alrededor de la mesa.

@@ -3,6 +3,16 @@ import AxeBuilder from '@axe-core/playwright';
 test('Portada, imágenes y acciones reales', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('h1')).toHaveCount(1);
+  await expect(page.locator('.site-header .brand img')).toHaveAttribute(
+    'src',
+    '/images/imagotipo.webp',
+  );
+  await page.locator('.category-gallery').scrollIntoViewIfNeeded();
+  for (const img of await page.locator('.category-gallery img,.product-visual img').all()) {
+    await expect
+      .poll(() => img.evaluate((item: HTMLImageElement) => item.complete && item.naturalWidth > 0))
+      .toBe(true);
+  }
   await expect(page.getByRole('link', { name: 'EXPLORAR LA CARTA' })).toHaveAttribute(
     'href',
     '/carta',
@@ -88,4 +98,8 @@ test('Capturas y preferencia de movimiento reducido', async ({ page }) => {
   await page.screenshot({ path: 'test-results/inicio-escritorio.png', fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({ path: 'test-results/inicio-movil.png', fullPage: true });
+  for (const width of [768, 1024]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.screenshot({ path: `test-results/inicio-${width}.png`, fullPage: true });
+  }
 });

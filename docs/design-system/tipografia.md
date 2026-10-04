@@ -6,11 +6,13 @@ El repositorio contenía solamente `README.md`: sin React, estilos, Tailwind, fu
 
 ## Familias y uso
 
-| Token / clase | Familia | Pesos normales | Uso | Evitar |
-| --- | --- | --- | --- | --- |
-| `--font-display` / `font-display` | Bakso Sapi; temporalmente Arial Black | 400 cuando se apruebe el archivo | Hero, titulares de marca y promociones grandes | Párrafos, tablas, formularios y módulos operativos |
-| `--font-heading` / `font-heading` | Bebas Neue | 400, único peso disponible | Categorías, precios, CTA, títulos secundarios | Párrafos largos y texto pequeño |
-| `--font-body` / `font-body` | Inter | 400, 500, 600, 700 | Navegación, descripciones, formularios, caja, cocina, inventario y reportes | Sustituirla por fuentes decorativas en interfaces operativas |
+Refinamiento posterior de la Home: la referencia aportada el 4 de octubre usa titulares editoriales. Se incorpora `--font-editorial` en `publico.css`: Bakso Sapi con fallback Georgia/serif del sistema para estos títulos y cards. No descarga otra fuente ni presupone la licencia de Bakso. `--font-display` conserva el fallback previo para componentes existentes; Inter y Bebas Neue mantienen sus funciones. Esta variación responde a la nueva referencia visual del usuario.
+
+| Token / clase                     | Familia                               | Pesos normales                   | Uso                                                                         | Evitar                                                       |
+| --------------------------------- | ------------------------------------- | -------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| `--font-display` / `font-display` | Bakso Sapi; temporalmente Arial Black | 400 cuando se apruebe el archivo | Hero, titulares de marca y promociones grandes                              | Párrafos, tablas, formularios y módulos operativos           |
+| `--font-heading` / `font-heading` | Bebas Neue                            | 400, único peso disponible       | Categorías, precios, CTA, títulos secundarios                               | Párrafos largos y texto pequeño                              |
+| `--font-body` / `font-body`       | Inter                                 | 400, 500, 600, 700               | Navegación, descripciones, formularios, caja, cocina, inventario y reportes | Sustituirla por fuentes decorativas en interfaces operativas |
 
 Los fallbacks se centralizan en `src/shared/styles/tokens.css`. Tailwind los consume desde `tailwind.config.js`; los componentes no repiten nombres de familias. Bebas Neue no tiene un peso bold real: no usar `font-bold` para simularlo.
 

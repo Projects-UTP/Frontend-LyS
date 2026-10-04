@@ -1,0 +1,219 @@
+[
+  {
+    "origen": "imagotipo.png",
+    "archivo": "imagotipo.webp",
+    "ancho": 600,
+    "alto": 209,
+    "bytes": 31618
+  },
+  {
+    "origen": "imagotipo-blanco.png",
+    "archivo": "imagotipo-blanco.webp",
+    "ancho": 600,
+    "alto": 202,
+    "bytes": 59298
+  },
+  {
+    "origen": "cat-pollos.jpg",
+    "archivo": "cat-pollos.webp",
+    "ancho": 720,
+    "alto": 540,
+    "bytes": 74426
+  },
+  {
+    "origen": "cat-alitas.jpg",
+    "archivo": "cat-alitas.webp",
+    "ancho": 720,
+    "alto": 540,
+    "bytes": 80604
+  },
+  {
+    "origen": "cat-bebidas.jpg",
+    "archivo": "cat-bebidas.webp",
+    "ancho": 720,
+    "alto": 540,
+    "bytes": 84904
+  },
+  {
+    "origen": "cat-combos.jpg",
+    "archivo": "cat-combos.webp",
+    "ancho": 720,
+    "alto": 540,
+    "bytes": 69672
+  },
+  {
+    "origen": "cat-parrillas.jpg",
+    "archivo": "cat-parrillas.webp",
+    "ancho": 720,
+    "alto": 540,
+    "bytes": 91424
+  },
+  {
+    "origen": "fav-anticuchos.jpg",
+    "archivo": "fav-anticuchos.webp",
+    "ancho": 720,
+    "alto": 720,
+    "bytes": 88266
+  },
+  {
+    "origen": "fav-cuarto-pollo.jpg",
+    "archivo": "fav-cuarto-pollo.webp",
+    "ancho": 720,
+    "alto": 720,
+    "bytes": 87376
+  },
+  {
+    "origen": "fav-pollo-entero.jpg",
+    "archivo": "fav-pollo-entero.webp",
+    "ancho": 720,
+    "alto": 720,
+    "bytes": 100722
+  },
+  {
+    "origen": "catalogo-v2/agua.jpg",
+    "archivo": "catalogo-v2-agua.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 11790
+  },
+  {
+    "origen": "catalogo-v2/alitas-bbq.jpg",
+    "archivo": "catalogo-v2-alitas-bbq.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 54106
+  },
+  {
+    "origen": "catalogo-v2/alitas-crocantes.jpg",
+    "archivo": "catalogo-v2-alitas-crocantes.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 39970
+  },
+  {
+    "origen": "catalogo-v2/anticuchos.jpg",
+    "archivo": "catalogo-v2-anticuchos.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 49892
+  },
+  {
+    "origen": "catalogo-v2/chaufa.jpg",
+    "archivo": "catalogo-v2-chaufa.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 38672
+  },
+  {
+    "origen": "catalogo-v2/chicha.jpg",
+    "archivo": "catalogo-v2-chicha.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 20052
+  },
+  {
+    "origen": "catalogo-v2/chuletas.jpg",
+    "archivo": "catalogo-v2-chuletas.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 55948
+  },
+  {
+    "origen": "catalogo-v2/coca-cola.jpg",
+    "archivo": "catalogo-v2-coca-cola.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 15684
+  },
+  {
+    "origen": "catalogo-v2/crema-volteada.jpg",
+    "archivo": "catalogo-v2-crema-volteada.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 16778
+  },
+  {
+    "origen": "catalogo-v2/cuarto-pollo.jpg",
+    "archivo": "catalogo-v2-cuarto-pollo.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 35416
+  },
+  {
+    "origen": "catalogo-v2/ensalada-mixta.jpg",
+    "archivo": "catalogo-v2-ensalada-mixta.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 43440
+  },
+  {
+    "origen": "catalogo-v2/ensalada-palta.jpg",
+    "archivo": "catalogo-v2-ensalada-palta.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 42406
+  },
+  {
+    "origen": "catalogo-v2/fanta.jpg",
+    "archivo": "catalogo-v2-fanta.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 15540
+  },
+  {
+    "origen": "catalogo-v2/inca-kola.jpg",
+    "archivo": "catalogo-v2-inca-kola.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 20546
+  },
+  {
+    "origen": "catalogo-v2/maracuya.jpg",
+    "archivo": "catalogo-v2-maracuya.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 22208
+  },
+  {
+    "origen": "catalogo-v2/medio-pollo.jpg",
+    "archivo": "catalogo-v2-medio-pollo.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 44650
+  },
+  {
+    "origen": "catalogo-v2/papas.jpg",
+    "archivo": "catalogo-v2-papas.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 22320
+  },
+  {
+    "origen": "catalogo-v2/parrilla-mixta.jpg",
+    "archivo": "catalogo-v2-parrilla-mixta.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 59472
+  },
+  {
+    "origen": "catalogo-v2/pepsi.jpg",
+    "archivo": "catalogo-v2-pepsi.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 21308
+  },
+  {
+    "origen": "catalogo-v2/pollo-entero.jpg",
+    "archivo": "catalogo-v2-pollo-entero.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 62840
+  },
+  {
+    "origen": "catalogo-v2/torta-chocolate.jpg",
+    "archivo": "catalogo-v2-torta-chocolate.webp",
+    "ancho": 640,
+    "alto": 640,
+    "bytes": 36462
+  }
+]

@@ -1,22 +1,14 @@
 import { Hero } from './Hero';
-import {
-  Categories,
-  Promotions,
-  About,
-  FeaturedProducts,
-  Services,
-  LocationSection,
-} from './Sections';
+import { Categories, Promotions, Benefits, CallToAction, LocationSection } from './Sections';
 export function Home() {
   return (
     <>
       <Hero />
-      <Categories />
       <Promotions />
-      <About />
-      <FeaturedProducts />
-      <Services />
+      <Categories />
+      <Benefits />
       <LocationSection />
+      <CallToAction />
     </>
   );
 }

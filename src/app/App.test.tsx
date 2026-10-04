@@ -9,6 +9,6 @@ it('Una ruta inexistente ofrece volver al inicio', () => {
   ).toBeInTheDocument();
   fireEvent.click(screen.getByRole('link', { name: 'VOLVER AL INICIO' }));
   expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-    'Sabor que nace de las brasas',
+    'Sabor peruano en cada brasa',
   );
 });
