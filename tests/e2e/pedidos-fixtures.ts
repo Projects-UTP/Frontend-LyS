@@ -9,6 +9,7 @@ export const localDemo = {
 };
 export async function pedidosFixture(page: Page) {
   let pedido: Record<string, unknown> | null = null;
+  let acceso: string | null = null;
   await page.route('**/api/database/records/locales**', (r) => r.fulfill({ json: [localDemo] }));
   await page.route('**/api/database/rpc/**', (r) => {
     const path = new URL(r.request().url()).pathname;
@@ -41,6 +42,7 @@ export async function pedidosFixture(page: Page) {
       });
     }
     if (path.endsWith('/crear_pedido_web')) {
+      acceso = body.p_acceso;
       const s = body.p_solicitud;
       const items = s.items.map((i: { product_id: string; quantity: number }) => {
         const p = productosDemo.find((p) => p.id === i.product_id)!;
@@ -84,7 +86,12 @@ export async function pedidosFixture(page: Page) {
       });
     }
     if (path.endsWith('/consultar_pedido'))
-      return r.fulfill({ json: body.p_codigo === 'LYS-000001' ? pedido : null });
+      return r.fulfill({
+        json:
+          body.p_codigo === 'LYS-000001' && body.p_acceso && body.p_acceso === acceso
+            ? pedido
+            : null,
+      });
     return r.fulfill({ status: 400, json: { message: 'RPC no incluido en fixture' } });
   });
 }
