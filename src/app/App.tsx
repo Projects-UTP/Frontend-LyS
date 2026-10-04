@@ -7,6 +7,7 @@ import { Providers } from './Providers';
 import { Carta, DetalleProducto } from '@/features/catalogo/Catalogo';
 import { RegistroCliente } from '@/features/autenticacion/Registro';
 import { MiCuenta } from '@/features/autenticacion/MiCuenta';
+import { IniciarSesion } from '@/features/autenticacion/Login';
 export function App() {
   return (
     <Providers>
@@ -17,6 +18,7 @@ export function App() {
             <Route path="carta" element={<Carta />} />
             <Route path="carta/:slug" element={<DetalleProducto />} />
             <Route path="registro" element={<RegistroCliente />} />
+            <Route path="iniciar-sesion" element={<IniciarSesion />} />
             <Route path="mi-cuenta" element={<MiCuenta />} />
             {(['promociones', 'nosotros', 'locales', 'contacto'] as const).map((page) => (
               <Route key={page} path={page} element={<PublicPage page={page} />} />
