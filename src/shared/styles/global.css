@@ -1,0 +1,14 @@
+@import './tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply m-0 bg-white font-body text-base text-neutral-950; line-height: 1.625; overflow-wrap: anywhere; }
+  :focus-visible { outline: 3px solid #8F1015; outline-offset: 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
