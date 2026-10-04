@@ -5,6 +5,8 @@ import { NotFound } from '@/features/publico/NotFound';
 import { PublicPage } from '@/features/publico/PublicPage';
 import { Providers } from './Providers';
 import { Carta, DetalleProducto } from '@/features/catalogo/Catalogo';
+import { RegistroCliente } from '@/features/autenticacion/Registro';
+import { MiCuenta } from '@/features/autenticacion/MiCuenta';
 export function App() {
   return (
     <Providers>
@@ -14,6 +16,8 @@ export function App() {
             <Route index element={<Home />} />
             <Route path="carta" element={<Carta />} />
             <Route path="carta/:slug" element={<DetalleProducto />} />
+            <Route path="registro" element={<RegistroCliente />} />
+            <Route path="mi-cuenta" element={<MiCuenta />} />
             {(['promociones', 'nosotros', 'locales', 'contacto'] as const).map((page) => (
               <Route key={page} path={page} element={<PublicPage page={page} />} />
             ))}
