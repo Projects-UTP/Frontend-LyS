@@ -1,4 +1,9 @@
 :root {
+  --space-section: clamp(3.5rem, 7vw, 7rem);
+  --radius-control: 0.375rem;
+  --radius-card: 1rem;
+  --shadow-card: 0 10px 35px rgb(23 23 23 / 6%);
+  --content-width: 76rem;
   /* Bakso Sapi se activará al disponer de un archivo con licencia web verificada. */
   --font-display: 'Bakso Sapi', 'Arial Black', sans-serif;
   --font-heading: 'Bebas Neue', 'Arial Narrow', sans-serif;
