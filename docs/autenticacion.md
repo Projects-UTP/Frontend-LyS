@@ -13,3 +13,7 @@ Las pruebas de navegador usan cuentas, códigos y tokens sintéticos calculados 
 `/iniciar-sesion` valida correo/contraseña, bloquea envíos simultáneos y presenta errores legibles. Un correo pendiente puede verificar su código y completar el perfil. El retorno admite exclusivamente rutas internas. La cabecera muestra Ingresar/Mi cuenta. Las rutas de cuenta llevan noindex.
 
 HU-AUT-002/003: pruebas de credenciales inválidas, redirección externa rechazada, cierre HTTP 503 sin falsa confirmación, cierre correcto y recarga sin sesión. Perfil/login cuentan con capturas deterministas.
+
+`/recuperar-acceso` implementa el método por código configurado en LYS: solicitud genérica, intercambio de código por token y cambio de contraseña mediante el SDK. El token solo permanece en memoria; un fallo de red permite reintentar el cambio sin consumir otra vez el código. Se puede solicitar otro código y borrar ese estado. Si una configuración externa cambia a enlaces, se informa que el método no está habilitado en esta interfaz en lugar de inventar un callback inseguro.
+
+Pendiente externo: comprobar recepción real de verificación y recuperación con un buzón controlado y un dominio autorizado. Las rutas de registro y recuperación no prometen entrega inmediata. No se han deshabilitado las verificaciones ni configurado un SMTP ficticio.
