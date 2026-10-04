@@ -20,6 +20,7 @@ export function Layout() {
       '/mi-cuenta': 'Mi cuenta',
       '/recuperar-acceso': 'Recuperar acceso',
       '/carrito': 'Carrito',
+      '/checkout': 'Checkout',
     };
     const dynamic = location.pathname.startsWith('/carta/');
     document.title = `${titles[location.pathname] ?? (dynamic ? 'Detalle de producto' : 'Página no encontrada')} | Leñas y Sabores`;
@@ -28,9 +29,14 @@ export function Layout() {
       ?.setAttribute(
         'content',
         (titles[location.pathname] || dynamic) &&
-          !['/registro', '/iniciar-sesion', '/mi-cuenta', '/recuperar-acceso'].includes(
-            location.pathname,
-          )
+          ![
+            '/registro',
+            '/iniciar-sesion',
+            '/mi-cuenta',
+            '/recuperar-acceso',
+            '/carrito',
+            '/checkout',
+          ].includes(location.pathname)
           ? 'index,follow'
           : 'noindex,follow',
       );
