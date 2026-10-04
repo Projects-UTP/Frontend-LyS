@@ -1,0 +1,65 @@
+import { useQuery } from '@tanstack/react-query';
+import { crearClienteInsforge } from '@/shared/lib/insforge';
+import { useAuth } from '@/features/autenticacion/context';
+import { useOperativo, type Rol } from './context';
+export type Mesa = {
+  id: string;
+  local_id: string;
+  numero: number;
+  nombre: string;
+  zona: string;
+  capacidad: number | null;
+  estado: string;
+  demostracion: boolean;
+  activo: boolean;
+};
+export async function rpcOperativo<T>(nombre: string, args: Record<string, unknown>): Promise<T> {
+  const { data, error } = await crearClienteInsforge().database.rpc(nombre, args);
+  if (error) {
+    const m = error.message ?? '';
+    if (m.includes('SIN_PERMISO'))
+      throw new Error('Tu rol no permite realizar esta acción en este local.');
+    if (m.includes('CONFLICTO')) throw new Error('La orden cambió. Actualiza antes de continuar.');
+    if (m.includes('MESA_OCUPADA'))
+      throw new Error('La mesa ya tiene una orden. Actualiza el mapa.');
+    if (m.includes('PEDIDO_PAGADO'))
+      throw new Error('Una orden pagada no permite modificar productos.');
+    throw new Error(
+      'No pudimos completar la acción. Revisa los datos y actualiza antes de reintentar.',
+    );
+  }
+  return data as T;
+}
+export function useAsignaciones() {
+  const auth = useAuth();
+  return useQuery({
+    queryKey: ['operativo', 'asignaciones', auth.usuario?.id],
+    enabled: !auth.cargando && !!auth.usuario,
+    queryFn: async () => {
+      const { data, error } = await crearClienteInsforge()
+        .database.from('empleados')
+        .select('local_id,rol')
+        .eq('usuario_id', auth.usuario!.id)
+        .eq('activo', true);
+      if (error) throw new Error('No pudimos comprobar tu acceso de personal.');
+      return data as { local_id: string; rol: Rol }[];
+    },
+  });
+}
+export function useMesas() {
+  const { local, usuario } = useOperativo();
+  return useQuery({
+    queryKey: ['operativo', 'mesas', local, usuario],
+    enabled: !!local,
+    queryFn: async () => {
+      const { data, error } = await crearClienteInsforge()
+        .database.from('mesas')
+        .select('id,local_id,numero,nombre,zona,capacidad,estado,demostracion,activo')
+        .eq('local_id', local)
+        .eq('activo', true)
+        .order('numero');
+      if (error) throw new Error('No pudimos cargar las mesas.');
+      return data as Mesa[];
+    },
+  });
+}
