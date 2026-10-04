@@ -5,6 +5,7 @@ import { useLocales } from '@/features/pedidos/api';
 import { useAsignaciones } from './api';
 import { OperativoContext } from './context';
 import './operativo.css';
+import { ActualizacionOperativa } from './ActualizacionOperativa';
 export function OperativoLayout() {
   const auth = useAuth(),
     asignaciones = useAsignaciones(),
@@ -88,6 +89,7 @@ export function OperativoLayout() {
           <Link to="/mi-cuenta">Mi cuenta</Link>
         </nav>
         <main id="operacion" className="op-shell">
+          <ActualizacionOperativa key={`${local}:${auth.usuario.id}`} />
           {error && <p role="alert">{error}</p>}
           <Outlet key={local} />
         </main>

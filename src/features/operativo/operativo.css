@@ -4,6 +4,27 @@
   color: #171717;
   font-family: Inter, sans-serif;
 }
+.op-connection {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: white;
+  padding: 0.8rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+}
+.op-connection p {
+  margin: 0;
+  flex: 1;
+  min-width: 180px;
+}
+.op-connection a {
+  text-decoration: underline;
+  font-weight: 700;
+}
 .op-kds {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

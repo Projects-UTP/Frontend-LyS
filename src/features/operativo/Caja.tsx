@@ -155,7 +155,7 @@ export function Caja() {
                         )}
                       </p>
                       <p>
-                        Mozo: {p.mozo_id ? 'personal asignado' : 'pedido web'} ·{' '}
+                        Mozo: {p.mozo_nombre || (p.mozo_id ? 'personal asignado' : 'pedido web')} ·{' '}
                         {p.total === null ? 'Total pendiente' : soles(p.total)}
                       </p>
                     </div>
@@ -208,6 +208,14 @@ export function Caja() {
 function ResumenCaja({ sesion: s }: { sesion: SesionCaja }) {
   return (
     <>
+      <p>
+        Abierta{' '}
+        {new Intl.DateTimeFormat('es-PE', {
+          timeZone: 'America/Lima',
+          dateStyle: 'short',
+          timeStyle: 'short',
+        }).format(new Date(s.opened_at))}
+      </p>
       <dl className="op-money-summary">
         <dt>Monto inicial</dt>
         <dd>{soles(s.monto_inicial)}</dd>
@@ -221,6 +229,8 @@ function ResumenCaja({ sesion: s }: { sesion: SesionCaja }) {
         <dd>{soles(s.total_ventas)}</dd>
         <dt>Efectivo esperado en caja</dt>
         <dd>{soles(s.efectivo_esperado)}</dd>
+        <dt>Total esperado · todos los métodos</dt>
+        <dd>{soles(s.total_esperado)}</dd>
       </dl>
       {s.fondos_anulados > 0 && (
         <p className="op-notice">
