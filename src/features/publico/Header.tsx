@@ -2,13 +2,15 @@ import { useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Container, ActionLink } from '@/shared/ui';
 import { Brand } from './Brand';
-import { negocio, navegacion } from './contenido';
+import { navegacion } from './contenido';
 import { useAuth } from '@/features/autenticacion/context';
+import { useCarrito } from '@/features/carrito/store';
 export function Header() {
   const [open, setOpen] = useState(false);
   const button = useRef<HTMLButtonElement>(null);
   const location = useLocation();
   const { usuario } = useAuth();
+  const unidades = useCarrito((s) => s.items.reduce((n, i) => n + i.quantity, 0));
   const close = () => {
     setOpen(false);
   };
@@ -45,7 +47,7 @@ export function Header() {
           <NavLink to={usuario ? '/mi-cuenta' : '/iniciar-sesion'} onClick={close}>
             {usuario ? 'Mi cuenta' : 'Ingresar'}
           </NavLink>
-          <ActionLink to={negocio.whatsapp}>ORDENAR AHORA</ActionLink>
+          <ActionLink to="/carrito">CARRITO ({unidades})</ActionLink>
         </nav>
       </Container>
     </header>
