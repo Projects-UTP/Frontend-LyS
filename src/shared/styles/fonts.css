@@ -1,0 +1,36 @@
+/* Archivos locales OFL, solo WOFF2 latino y los pesos acordados. */
+@font-face {
+  font-family: 'Inter';
+  src: url('@fontsource/inter/files/inter-latin-400-normal.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('@fontsource/inter/files/inter-latin-500-normal.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('@fontsource/inter/files/inter-latin-600-normal.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('@fontsource/inter/files/inter-latin-700-normal.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url('@fontsource/bebas-neue/files/bebas-neue-latin-400-normal.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
