@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import type { Producto } from '@/features/catalogo/api';
 export type ItemCarrito = { product_id: string; quantity: number };
-const uuid = /^[0-9a-f-]{36}$/i;
+const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 export function sanearItems(value: unknown): ItemCarrito[] {
   if (!Array.isArray(value)) return [];
   const ids = new Set<string>();
