@@ -20,6 +20,15 @@ const MesaDetalle = lazy(() =>
   import('@/features/operativo/MesaDetalle').then((m) => ({ default: m.MesaDetalle })),
 );
 const Caja = lazy(() => import('@/features/operativo/Caja').then((m) => ({ default: m.Caja })));
+const Cocina = lazy(() =>
+  import('@/features/operativo/Cocina').then((m) => ({ default: m.Cocina })),
+);
+const Listos = lazy(() =>
+  import('@/features/operativo/Cocina').then((m) => ({ default: m.Listos })),
+);
+const InicioOperativo = lazy(() =>
+  import('@/features/operativo/Cocina').then((m) => ({ default: m.InicioOperativo })),
+);
 import { Carta, DetalleProducto } from '@/features/catalogo/Catalogo';
 const RegistroCliente = lazy(() =>
   import('@/features/autenticacion/Registro').then((m) => ({ default: m.RegistroCliente })),
@@ -46,10 +55,12 @@ export function App() {
         >
           <Routes>
             <Route path="operativo" element={<OperativoLayout />}>
-              <Route index element={<Mesas />} />
+              <Route index element={<InicioOperativo />} />
               <Route path="mesas" element={<Mesas />} />
               <Route path="mesa/:id" element={<MesaDetalle />} />
               <Route path="caja" element={<Caja />} />
+              <Route path="cocina" element={<Cocina />} />
+              <Route path="listos" element={<Listos />} />
             </Route>
             <Route element={<Layout />}>
               <Route index element={<Home />} />

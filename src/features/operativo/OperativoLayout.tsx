@@ -79,6 +79,12 @@ export function OperativoLayout() {
           {roles.some((r) => ['MOZO', 'CAJA', 'ADMINISTRADOR'].includes(r)) && (
             <Link to="/operativo/mesas">Mesas</Link>
           )}
+          {roles.some((r) => ['COCINA', 'ADMINISTRADOR'].includes(r)) && (
+            <Link to="/operativo/cocina">Cocina</Link>
+          )}
+          {roles.some((r) => ['MOZO', 'ADMINISTRADOR'].includes(r)) && (
+            <Link to="/operativo/listos">Pedidos listos</Link>
+          )}
           <Link to="/mi-cuenta">Mi cuenta</Link>
         </nav>
         <main id="operacion" className="op-shell">

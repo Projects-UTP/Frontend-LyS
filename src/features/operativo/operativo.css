@@ -4,6 +4,85 @@
   color: #171717;
   font-family: Inter, sans-serif;
 }
+.op-kds {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+  align-items: start;
+}
+.op-kds-column {
+  min-width: 0;
+  background: #e9e9e7;
+  padding: 1rem;
+  border-radius: 12px;
+  border-top: 5px solid #5e5e5e;
+}
+.op-kds-column h2 {
+  margin: 0 0 1rem;
+}
+.op-kds-en_preparacion {
+  border-color: #8f1015;
+}
+.op-kds-listo {
+  border-color: #206344;
+}
+.op-ticket {
+  margin: 0 0 1rem;
+}
+.op-ticket h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.op-ticket-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+.op-ticket-items {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+.op-ticket-items li {
+  border-top: 1px solid #ddd;
+  padding: 0.8rem 0;
+}
+.op-ticket-qty {
+  font-size: 1.5rem;
+}
+.op-ticket > button {
+  width: 100%;
+  margin-top: 1rem;
+}
+.op-ticket.atencion {
+  border: 2px solid #806000;
+  background: #fff9e5;
+}
+.op-ticket.demora {
+  border: 2px solid #8f1015;
+  background: #fbeaec;
+}
+.op-ticket.normal {
+  border: 2px solid #206344;
+}
+.op-ready-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 1rem;
+}
+.op-nav {
+  flex-wrap: wrap;
+}
+@media (max-width: 1000px) {
+  .op-kds {
+    grid-template-columns: 1fr;
+  }
+}
 .op-app h1,
 .op-app h2,
 .op-app h3 {

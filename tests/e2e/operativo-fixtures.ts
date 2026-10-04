@@ -50,6 +50,43 @@ export async function operativoFixture(page: Page, salon = salonFixture(), roles
       });
     if (path.endsWith('/orden_operativa'))
       return r.fulfill({ json: salon.orden?.id === body.p_id ? salon.orden : null });
+    if (path.endsWith('/cola_cocina'))
+      return r.fulfill({
+        json:
+          salon.orden?.estado_pago === 'APROBADO' &&
+          ['CONFIRMADO', 'EN_PREPARACION', 'LISTO'].includes(salon.orden.estado_pedido)
+            ? [salon.orden]
+            : [],
+      });
+    if (path.endsWith('/cola_listos'))
+      return r.fulfill({ json: salon.orden?.estado_pedido === 'LISTO' ? [salon.orden] : [] });
+    if (path.endsWith('/cambiar_estado_pedido')) {
+      const p = salon.orden;
+      if (!p || p.estado_pago !== 'APROBADO' || p.revision !== body.p_revision)
+        return r.fulfill({ status: 400, json: { message: 'REVISION_CONFLICTO' } });
+      const avanzar =
+        (p.estado_pedido === 'CONFIRMADO' && body.p_estado === 'EN_PREPARACION') ||
+        (p.estado_pedido === 'EN_PREPARACION' && body.p_estado === 'LISTO');
+      const entregar = p.estado_pedido === 'LISTO' && body.p_estado === 'ENTREGADO';
+      if (
+        (avanzar && !roles.includes('COCINA')) ||
+        (entregar && !roles.includes('MOZO')) ||
+        (!avanzar && !entregar)
+      )
+        return r.fulfill({ status: 403, json: { message: 'SIN_PERMISO' } });
+      p.estado_pedido = body.p_estado;
+      p.revision++;
+      if (body.p_estado === 'EN_PREPARACION') p.preparation_started_at = new Date().toISOString();
+      if (body.p_estado === 'LISTO') p.ready_at = new Date().toISOString();
+      if (entregar) {
+        p.delivered_at = p.finalized_at = new Date().toISOString();
+        p.estado_pedido = 'FINALIZADO';
+        p.revision++;
+        if (p.mesa) p.mesa.estado = 'LIBRE';
+        salon.mesas.find((m) => m.id === p.mesa_id)!.estado = 'LIBRE';
+      }
+      return r.fulfill({ json: p });
+    }
     if (path.endsWith('/abrir_caja')) {
       if (!roles.includes('CAJA'))
         return r.fulfill({ status: 403, json: { message: 'SIN_PERMISO' } });
@@ -96,6 +133,7 @@ export async function operativoFixture(page: Page, salon = salonFixture(), roles
       salon.pagos.set(body.p_intento, pago);
       salon.orden.estado_pago = 'APROBADO';
       salon.orden.estado_pedido = 'CONFIRMADO';
+      salon.orden.paid_at = salon.orden.confirmed_at = new Date().toISOString();
       salon.orden.revision++;
       if (salon.orden.mesa) salon.orden.mesa.estado = 'OCUPADA';
       salon.mesas.find((m) => m.id === salon.orden!.mesa_id)!.estado = 'OCUPADA';
@@ -116,9 +154,20 @@ export async function operativoFixture(page: Page, salon = salonFixture(), roles
       return r.fulfill({ json: salon.caja });
     }
     if (path.endsWith('/listar_pedidos_mesa'))
-      return r.fulfill({ json: salon.orden ? [salon.orden] : [] });
+      return r.fulfill({
+        json:
+          salon.orden && !['FINALIZADO', 'ANULADO'].includes(salon.orden.estado_pedido)
+            ? [salon.orden]
+            : [],
+      });
     if (path.endsWith('/pedido_de_mesa'))
-      return r.fulfill({ json: salon.orden?.mesa_id === body.p_mesa ? salon.orden : null });
+      return r.fulfill({
+        json:
+          salon.orden?.mesa_id === body.p_mesa &&
+          !['FINALIZADO', 'ANULADO'].includes(salon.orden.estado_pedido)
+            ? salon.orden
+            : null,
+      });
     if (path.endsWith('/abrir_pedido_mesa')) {
       if (!roles.includes('MOZO'))
         return r.fulfill({ status: 403, json: { message: 'SIN_PERMISO' } });
