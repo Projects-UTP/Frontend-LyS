@@ -12,3 +12,10 @@ El salón carga mesas configurables, filtra zona/estado y pagina en bloques de 5
 `/operativo/cocina` solo admite COCINA/ADMINISTRADOR; Inter, cantidades destacadas, mesa/modalidad, mozo, timestamps y observaciones sin columnas monetarias. Los estados vienen del servidor. El reloj visual se actualiza cada 30 segundos sin consultas de red. `VITE_KDS_ATENCION_MIN` y `VITE_KDS_DEMORA_MIN` son opcionales: ambos deben ser positivos y demora mayor que atención. Vacíos deshabilitan el semáforo; no se inventa un SLA. BRASA/PARRILLA/BEBIDAS/ENSALADAS se mantienen como futura extensión de estaciones, sin dividir la orden antes de confirmar la operación real.
 
 `/operativo/listos` admite MOZO/ADMINISTRADOR. La entrega exige confirmación explícita y revisión actual. El servidor registra ENTREGADO y FINALIZADO en la misma transacción para consumo local/recojo; libera la mesa y conserva timestamps e historial. No se implementa despacho delivery.
+## Conexión de operación
+
+Una conexión del SDK comparte la sesión Auth en memoria y se suscribe únicamente a los canales exactos de roles/local asignados. El proxy HTTP `/insforge` y el proxy WebSocket `/socket.io` mantienen el mismo origen; producción requiere HTTPS y ambos proxies. Cambio de local, usuario o salida limpia listeners/suscripciones y desconecta.
+
+Cada evento valida ámbito/revisión, consulta una sola orden autorizada y actualiza sus tarjetas/mapa. Duplicados y respuestas antiguas no retroceden estados. No vuelve a cargar todas las órdenes por evento. Al reconectar o volver a la pestaña consulta el ámbito activo; si falla la conexión, fallback cada 30 segundos solo visible y actualización manual. Aviso de listos visible al mozo, sin fabricar una notificación de cocina.
+
+Consola registra únicamente códigos de fallo de RPC o conexión, sin errores del proveedor ni contactos, referencias o tokens. Pruebas de navegador emulan Socket.IO y no demuestran entrega real a personal aún no provisionado; la conexión WebSocket real anónima fue rechazada en lys-validacion.

@@ -2,6 +2,7 @@ import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { authFixture, usuarioDemo } from './auth-fixtures';
 import { localDemo } from './pedidos-fixtures';
+import { operativoFixture } from './operativo-fixtures';
 export async function loginPersonal(page: Page) {
   await page.goto('/operativo/mesas');
   await page.getByLabel('Correo', { exact: true }).fill(usuarioDemo.email);
@@ -10,7 +11,7 @@ export async function loginPersonal(page: Page) {
 }
 test('mapa de mesas responsive, filtros y paginación configurable', async ({ page }) => {
   test.setTimeout(60000);
-  await authFixture(page);
+  await operativoFixture(page);
   await page.route('**/api/database/rpc/listar_pedidos_mesa', (r) => r.fulfill({ json: [] }));
   await page.route('**/api/database/records/locales**', (r) => r.fulfill({ json: [localDemo] }));
   await page.route('**/api/database/records/empleados**', (r) =>

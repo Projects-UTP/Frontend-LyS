@@ -13,6 +13,9 @@ export async function loginPersonal(page: Page) {
 }
 export function salonFixture() {
   return {
+    conexionDisponible: true,
+    conexiones: new Set<() => void>(),
+    suscriptores: new Set<(p: Orden, cocina: boolean) => void>(),
     orden: null as Orden | null,
     caja: null as SesionCaja | null,
     pagos: new Map<
@@ -32,9 +35,97 @@ export function salonFixture() {
     })) as Mesa[],
   };
 }
+export function notificarSalon(salon: ReturnType<typeof salonFixture>, cocinaAnterior = false) {
+  if (!salon.orden) return;
+  const cocina =
+    cocinaAnterior ||
+    (salon.orden.estado_pago === 'APROBADO' &&
+      ['CONFIRMADO', 'EN_PREPARACION', 'LISTO'].includes(salon.orden.estado_pedido));
+  salon.suscriptores.forEach((f) => f(salon.orden!, cocina));
+}
 export async function operativoFixture(page: Page, salon = salonFixture(), roles = ['MOZO']) {
   await catalogoFixture(page);
   await authFixture(page);
+  // Transporte exclusivamente simulado; ningún token sintético sale a LYS.
+  await page.routeWebSocket('**/socket.io/**', (ws) => {
+    const canales = new Set<string>();
+    ws.send(
+      '0' +
+        JSON.stringify({
+          sid: 'fixture-engine',
+          upgrades: [],
+          pingInterval: 100000,
+          pingTimeout: 200000,
+          maxPayload: 1000000,
+        }),
+    );
+    const cerrar = () => ws.close({ code: 1001, reason: 'Corte simulado' });
+    const emitir = (p: Orden, cocina: boolean) =>
+      canales.forEach((channel) => {
+        if (channel.endsWith(':COCINA') && !cocina) return;
+        ws.send(
+          '42' +
+            JSON.stringify([
+              'pedido_actualizado',
+              {
+                id: p.id,
+                local_id: p.local_id,
+                mesa_id: p.mesa_id,
+                revision: p.revision,
+                estado_pedido: p.estado_pedido,
+                estado_pago: p.estado_pago,
+                meta: {
+                  channel,
+                  messageId: crypto.randomUUID(),
+                  timestamp: new Date().toISOString(),
+                },
+              },
+            ]),
+        );
+      });
+    salon.conexiones.add(cerrar);
+    salon.suscriptores.add(emitir);
+    ws.onClose(() => {
+      salon.conexiones.delete(cerrar);
+      salon.suscriptores.delete(emitir);
+    });
+    ws.onMessage((message) => {
+      if (typeof message !== 'string') return;
+      if (message.startsWith('40')) {
+        ws.send(
+          salon.conexionDisponible
+            ? '40' + JSON.stringify({ sid: 'fixture-socket' })
+            : '44' + JSON.stringify({ message: 'Sin transporte simulado' }),
+        );
+        return;
+      }
+      if (message === '2') {
+        ws.send('3');
+        return;
+      }
+      const ack = message.match(/^42(\d+)(\[.*\])$/);
+      if (!ack) return;
+      const [evento, datos] = JSON.parse(ack[2]);
+      if (evento === 'realtime:subscribe') {
+        const ok = roles.some((rol) => datos.channel === `lys-operativo:${localDemo.id}:${rol}`);
+        if (ok) canales.add(datos.channel);
+        ws.send(
+          '43' +
+            ack[1] +
+            JSON.stringify([
+              {
+                ok,
+                channel: datos.channel,
+                presence: { members: [] },
+                ...(!ok
+                  ? { error: { code: 'REALTIME_UNAUTHORIZED', message: 'Canal denegado' } }
+                  : {}),
+              },
+            ]),
+        );
+      }
+    });
+  });
   await page.route('**/api/database/records/locales**', (r) => r.fulfill({ json: [localDemo] }));
   await page.route('**/api/database/records/empleados**', (r) =>
     r.fulfill({ json: roles.map((rol) => ({ local_id: localDemo.id, rol })) }),
@@ -48,8 +139,16 @@ export async function operativoFixture(page: Page, salon = salonFixture(), roles
       return r.fulfill({
         json: salon.orden?.estado_pedido === 'PENDIENTE_PAGO' ? [salon.orden] : [],
       });
-    if (path.endsWith('/orden_operativa'))
+    if (path.endsWith('/orden_operativa') || path.endsWith('/consultar_orden_operativa'))
       return r.fulfill({ json: salon.orden?.id === body.p_id ? salon.orden : null });
+    if (path.endsWith('/consultar_cocina'))
+      return r.fulfill({
+        json:
+          salon.orden?.estado_pago === 'APROBADO' &&
+          ['CONFIRMADO', 'EN_PREPARACION', 'LISTO'].includes(salon.orden.estado_pedido)
+            ? salon.orden
+            : null,
+      });
     if (path.endsWith('/cola_cocina'))
       return r.fulfill({
         json:
@@ -85,6 +184,7 @@ export async function operativoFixture(page: Page, salon = salonFixture(), roles
         if (p.mesa) p.mesa.estado = 'LIBRE';
         salon.mesas.find((m) => m.id === p.mesa_id)!.estado = 'LIBRE';
       }
+      notificarSalon(salon, true);
       return r.fulfill({ json: p });
     }
     if (path.endsWith('/abrir_caja')) {
@@ -144,7 +244,9 @@ export async function operativoFixture(page: Page, salon = salonFixture(), roles
       if (metodo === 'EFECTIVO')
         salon.caja.efectivo_esperado =
           Math.round((salon.caja.efectivo_esperado + monto) * 100) / 100;
-      salon.caja.total_esperado = salon.caja.efectivo_esperado;
+      salon.caja.total_esperado =
+        salon.caja.monto_inicial + salon.caja.total_ventas + salon.caja.fondos_anulados;
+      notificarSalon(salon);
       return r.fulfill({ json: pago });
     }
     if (path.endsWith('/cerrar_caja')) {
@@ -191,6 +293,7 @@ export async function operativoFixture(page: Page, salon = salonFixture(), roles
         mesa: { numero: mesa.numero, nombre: mesa.nombre, estado: mesa.estado },
         items: [],
       };
+      notificarSalon(salon);
       return r.fulfill({ json: salon.orden });
     }
     if (path.endsWith('/editar_pedido_mesa')) {
@@ -217,6 +320,7 @@ export async function operativoFixture(page: Page, salon = salonFixture(), roles
       );
       salon.orden.observaciones = body.p_observaciones;
       salon.orden.revision++;
+      notificarSalon(salon);
       return r.fulfill({ json: salon.orden });
     }
     if (path.endsWith('/enviar_pedido_caja')) {
@@ -224,6 +328,7 @@ export async function operativoFixture(page: Page, salon = salonFixture(), roles
       salon.orden!.revision++;
       salon.orden!.mesa!.estado = 'POR_COBRAR';
       salon.mesas.find((m) => m.id === salon.orden!.mesa_id)!.estado = 'POR_COBRAR';
+      notificarSalon(salon);
       return r.fulfill({ json: salon.orden });
     }
     return r.fulfill({ status: 400, json: { message: 'RPC no incluida en fixture' } });
