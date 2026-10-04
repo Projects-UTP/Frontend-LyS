@@ -17,6 +17,13 @@ export async function authFixture(page: Page) {
   const datos = () => ({ user: usuarioDemo, accessToken: token(), csrfToken: 'fixture-csrf' });
   await page.route('**/api/auth/**', async (r) => {
     const path = new URL(r.request().url()).pathname;
+    if (path.endsWith('/email/exchange-reset-password-token')) {
+      return r.request().postDataJSON().code === '123456'
+        ? r.fulfill({
+            json: { token: 'fixture-reset', expiresAt: new Date(Date.now() + 60000).toISOString() },
+          })
+        : r.fulfill({ status: 400, json: { message: 'Invalid code', statusCode: 400 } });
+    }
     if (path.endsWith('/public-config'))
       return r.fulfill({
         json: {
