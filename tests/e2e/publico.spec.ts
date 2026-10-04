@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { catalogoFixture } from './fixtures';
+test.beforeEach(async ({ page }) => catalogoFixture(page));
 test('Portada, imágenes y acciones reales', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('h1')).toHaveCount(1);

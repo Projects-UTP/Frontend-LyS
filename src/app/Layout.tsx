@@ -16,10 +16,14 @@ export function Layout() {
       '/locales': 'Nuestro local',
       '/contacto': 'Contacto',
     };
-    document.title = `${titles[location.pathname] ?? 'Página no encontrada'} | Leñas y Sabores`;
+    const dynamic = location.pathname.startsWith('/carta/');
+    document.title = `${titles[location.pathname] ?? (dynamic ? 'Detalle de producto' : 'Página no encontrada')} | Leñas y Sabores`;
     document
       .querySelector('meta[name="robots"]')
-      ?.setAttribute('content', titles[location.pathname] ? 'index,follow' : 'noindex,follow');
+      ?.setAttribute(
+        'content',
+        titles[location.pathname] || dynamic ? 'index,follow' : 'noindex,follow',
+      );
     if (previous.current !== location.pathname) {
       window.scrollTo(0, 0);
       main.current?.focus();
