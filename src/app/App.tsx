@@ -11,6 +11,7 @@ const Carrito = lazy(() =>
 const Checkout = lazy(() =>
   import('@/features/checkout/Checkout').then((m) => ({ default: m.Checkout })),
 );
+const Pedido = lazy(() => import('@/features/pedidos/Pedido').then((m) => ({ default: m.Pedido })));
 import { Carta, DetalleProducto } from '@/features/catalogo/Catalogo';
 const RegistroCliente = lazy(() =>
   import('@/features/autenticacion/Registro').then((m) => ({ default: m.RegistroCliente })),
@@ -41,6 +42,8 @@ export function App() {
               <Route path="carta" element={<Carta />} />
               <Route path="carrito" element={<Carrito />} />
               <Route path="checkout" element={<Checkout />} />
+              <Route path="pedido/:codigo/confirmacion" element={<Pedido confirmacion />} />
+              <Route path="pedido/:codigo" element={<Pedido />} />
               <Route path="carta/:slug" element={<DetalleProducto />} />
               <Route path="registro" element={<RegistroCliente />} />
               <Route path="iniciar-sesion" element={<IniciarSesion />} />
