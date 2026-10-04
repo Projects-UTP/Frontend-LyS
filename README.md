@@ -22,3 +22,5 @@ React Router ya está integrado. TanStack Query, Zustand, React Hook Form y Zod 
 Validaciones adicionales: `npm run typecheck`, `npm test`; para navegador, `npx playwright install chromium`, `npm run build` y `npm run test:e2e`. [Entrega, pruebas, recursos y pendientes del Sprint 1](docs/sprint-1.md).
 
 Scrum y arquitectura compartidos: `../SCRUM.md` y `../ARQUITECTURA.md`.
+
+[Refinamiento visual del inicio](docs/refinamiento-inicio.md): nueva referencia, imagotipo original, recursos fotográficos y validación responsive.
