@@ -36,6 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         queries.removeQueries({ queryKey: ['perfil'] });
         queries.removeQueries({ queryKey: ['pedidos'] });
         queries.removeQueries({ queryKey: ['pedido'] });
+        queries.removeQueries({ queryKey: ['operativo'] });
       } else if (event === 'signedIn') {
         void actualizar();
       }
@@ -51,6 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     queries.removeQueries({ queryKey: ['perfil'] });
     queries.removeQueries({ queryKey: ['pedidos'] });
     queries.removeQueries({ queryKey: ['pedido'] });
+    queries.removeQueries({ queryKey: ['operativo'] });
   };
   return (
     <AuthContext.Provider value={{ usuario, cargando, actualizar, salir }}>

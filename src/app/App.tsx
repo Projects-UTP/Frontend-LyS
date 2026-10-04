@@ -12,6 +12,10 @@ const Checkout = lazy(() =>
   import('@/features/checkout/Checkout').then((m) => ({ default: m.Checkout })),
 );
 const Pedido = lazy(() => import('@/features/pedidos/Pedido').then((m) => ({ default: m.Pedido })));
+const OperativoLayout = lazy(() =>
+  import('@/features/operativo/OperativoLayout').then((m) => ({ default: m.OperativoLayout })),
+);
+const Mesas = lazy(() => import('@/features/operativo/Mesas').then((m) => ({ default: m.Mesas })));
 import { Carta, DetalleProducto } from '@/features/catalogo/Catalogo';
 const RegistroCliente = lazy(() =>
   import('@/features/autenticacion/Registro').then((m) => ({ default: m.RegistroCliente })),
@@ -37,6 +41,10 @@ export function App() {
           }
         >
           <Routes>
+            <Route path="operativo" element={<OperativoLayout />}>
+              <Route index element={<Mesas />} />
+              <Route path="mesas" element={<Mesas />} />
+            </Route>
             <Route element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="carta" element={<Carta />} />
