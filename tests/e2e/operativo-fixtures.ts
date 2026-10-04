@@ -20,7 +20,18 @@ export function salonFixture() {
     caja: null as SesionCaja | null,
     pagos: new Map<
       string,
-      { pago_id: string; estado: string; monto: number; vuelto: number; reutilizado: boolean }
+      {
+        pago_id: string;
+        estado: string;
+        monto: number;
+        vuelto: number;
+        reutilizado: boolean;
+        metodo: MetodoPago;
+        created_at: string;
+        motivo_anulacion?: string;
+        anulado_at?: string;
+        anulado_por?: string;
+      }
     >(),
     mesas: Array.from({ length: 20 }, (_, i) => ({
       id: `cc000000-0000-4000-8000-${String(i + 1).padStart(12, '0')}`,
@@ -135,6 +146,49 @@ export async function operativoFixture(page: Page, salon = salonFixture(), roles
     const path = new URL(r.request().url()).pathname,
       body = r.request().postDataJSON();
     if (path.endsWith('/mi_caja')) return r.fulfill({ json: salon.caja });
+    if (path.endsWith('/consultar_pago_administrador')) {
+      if (!roles.includes('ADMINISTRADOR'))
+        return r.fulfill({ status: 403, json: { message: 'SIN_PERMISO' } });
+      const pago = [...salon.pagos.values()][0],
+        p = salon.orden;
+      return r.fulfill({
+        json:
+          pago && p?.codigo === body.p_codigo && p.local_id === body.p_local
+            ? {
+                ...pago,
+                codigo: p.codigo,
+                estado_pedido: p.estado_pedido,
+                sesion_estado: salon.caja?.estado,
+                puede_anular:
+                  pago.estado === 'APROBADO' &&
+                  p.estado_pedido === 'CONFIRMADO' &&
+                  salon.caja?.estado === 'ABIERTA',
+              }
+            : null,
+      });
+    }
+    if (path.endsWith('/anular_pago')) {
+      const pago = [...salon.pagos.values()].find((v) => v.pago_id === body.p_pago),
+        p = salon.orden;
+      if (!roles.includes('ADMINISTRADOR') || !body.p_confirmado || body.p_motivo.trim().length < 3)
+        return r.fulfill({ status: 403, json: { message: 'SIN_PERMISO' } });
+      if (!pago || !p || p.estado_pedido !== 'CONFIRMADO' || salon.caja?.estado !== 'ABIERTA')
+        return r.fulfill({ status: 400, json: { message: 'ANULACION_NO_PERMITIDA' } });
+      pago.estado = 'ANULADO';
+      pago.motivo_anulacion = body.p_motivo;
+      pago.anulado_at = new Date().toISOString();
+      pago.anulado_por = usuarioDemo.id;
+      p.estado_pago = p.estado_pedido = 'ANULADO';
+      p.revision++;
+      if (p.mesa) p.mesa.estado = 'LIBRE';
+      salon.mesas.find((m) => m.id === p.mesa_id)!.estado = 'LIBRE';
+      salon.caja.ventas[pago.metodo] = (salon.caja.ventas[pago.metodo] ?? 0) - pago.monto;
+      salon.caja.total_ventas -= pago.monto;
+      salon.caja.fondos_anulados += pago.monto;
+      salon.caja.revision++;
+      notificarSalon(salon, true);
+      return r.fulfill({ json: p });
+    }
     if (path.endsWith('/cola_pagos'))
       return r.fulfill({
         json: salon.orden?.estado_pedido === 'PENDIENTE_PAGO' ? [salon.orden] : [],
@@ -229,6 +283,8 @@ export async function operativoFixture(page: Page, salon = salonFixture(), roles
             ? (Math.round(Number(body.p_recibido) * 100) - Math.round(monto * 100)) / 100
             : 0,
         reutilizado: false,
+        metodo,
+        created_at: new Date().toISOString(),
       };
       salon.pagos.set(body.p_intento, pago);
       salon.orden.estado_pago = 'APROBADO';
