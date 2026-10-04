@@ -27,4 +27,6 @@ Scrum y arquitectura compartidos: `../SCRUM.md` y `../ARQUITECTURA.md`.
 
 Sprint 3: [carrito](docs/carrito.md), [checkout](docs/checkout.md) y [confirmación/seguimiento privados](docs/pedidos.md), con cotización monetaria backend y pago pendiente.
 
+[Interfaz operativa de mesas](docs/operacion.md), restringida al personal asignado por local.
+
 [Refinamiento visual del inicio](docs/refinamiento-inicio.md): nueva referencia, imagotipo original, recursos fotográficos y validación responsive.
