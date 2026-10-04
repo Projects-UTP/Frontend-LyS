@@ -8,9 +8,9 @@
   --font-display: 'Bakso Sapi', 'Arial Black', sans-serif;
   --font-heading: 'Bebas Neue', 'Arial Narrow', sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --color-brand-red-50: #FBEAEC;
-  --color-brand-red-500: #C81018;
-  --color-brand-red-700: #8F1015;
+  --color-brand-red-50: #fbeaec;
+  --color-brand-red-500: #c81018;
+  --color-brand-red-700: #8f1015;
   --color-neutral-950: #171717;
-  --color-neutral-600: #5E5E5E;
+  --color-neutral-600: #5e5e5e;
 }
