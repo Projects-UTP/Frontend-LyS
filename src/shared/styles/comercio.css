@@ -523,3 +523,55 @@
     padding: 0.8rem 0.6rem;
   }
 }
+.pedido-shell {
+  max-width: 68rem;
+}
+.pedido-shell h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+}
+.pedido-shell h2 {
+  font-family: var(--font-heading);
+  font-size: 1.7rem;
+  margin: 1.7rem 0 1rem;
+}
+.order-status-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 1rem 0 1.5rem;
+}
+.order-code {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  letter-spacing: 0.06em;
+}
+.order-state {
+  padding: 0.5rem 0.8rem;
+  background: #fbeaec;
+  color: #8f1015;
+  border-radius: 0.5rem;
+  font-weight: 600;
+}
+.review-items small {
+  display: block;
+  color: #5e5e5e;
+  margin-top: 0.4rem;
+}
+.order-history ol {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+.order-history li {
+  border-left: 3px solid #c81018;
+  padding: 0.8rem 1rem;
+  background: #fbf7f2;
+  margin: 0.7rem 0;
+}
+.order-history time {
+  display: block;
+  color: #5e5e5e;
+  margin-top: 0.4rem;
+}

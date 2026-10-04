@@ -23,7 +23,8 @@ export function Layout() {
       '/checkout': 'Checkout',
     };
     const dynamic = location.pathname.startsWith('/carta/');
-    document.title = `${titles[location.pathname] ?? (dynamic ? 'Detalle de producto' : 'Página no encontrada')} | Leñas y Sabores`;
+    const pedido = location.pathname.startsWith('/pedido/');
+    document.title = `${titles[location.pathname] ?? (dynamic ? 'Detalle de producto' : pedido ? 'Tu pedido' : 'Página no encontrada')} | Leñas y Sabores`;
     document
       .querySelector('meta[name="robots"]')
       ?.setAttribute(

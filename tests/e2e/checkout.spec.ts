@@ -48,6 +48,22 @@ test('checkout invitado cotiza, conserva carrito tras fallo y reintenta con la m
   ).toHaveLength(1);
   await page.getByRole('button', { name: 'CONFIRMAR PEDIDO' }).click();
   await expect(page).toHaveURL(/pedido\/LYS-000001\/confirmacion/);
+  await expect(page.getByRole('heading', { name: 'Tu pedido está registrado' })).toBeVisible();
+  await expect(page.getByText('El pago sigue pendiente', { exact: true })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole('heading', { name: 'Tu pedido está registrado' })).toBeVisible();
+  for (const width of [390, 1366]) {
+    await page.setViewportSize({ width, height: 1000 });
+    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+    await page.screenshot({ path: `test-results/s3-confirmacion-${width}.png`, fullPage: true });
+  }
+  await page.getByRole('link', { name: 'VER SEGUIMIENTO' }).click();
+  await expect(page.getByRole('heading', { name: 'Historial' })).toBeVisible();
+  await expect(page.getByText('Pedido registrado', { exact: true })).toBeVisible();
+  await page.screenshot({ path: 'test-results/s3-seguimiento.png', fullPage: true });
+  await page.evaluate(() => sessionStorage.clear());
+  await page.reload();
+  await expect(page.getByRole('heading', { name: 'No podemos mostrar este pedido' })).toBeVisible();
   expect(claves[0]).toBe(claves[1]);
   expect(
     JSON.parse((await page.evaluate(() => localStorage.getItem('lys-carrito')))!).state.items,

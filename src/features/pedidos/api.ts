@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { crearClienteInsforge } from '@/shared/lib/insforge';
 import type { ItemCarrito } from '@/features/carrito/store';
+import { useAuth } from '@/features/autenticacion/context';
+import { leerAcceso } from './acceso';
 export type Local = { id: string; nombre: string; direccion: string; telefono: string };
 export type Cotizacion = {
   items: {
@@ -81,4 +83,42 @@ export async function crearPedido(
   if (error) throw new Error(errorPedido(error));
   if (!data?.codigo) throw new Error('No recibimos confirmación. Reintenta el mismo pedido.');
   return data as { codigo: string; id: string; reutilizado: boolean };
+}
+export type ResumenPedido = {
+  codigo: string;
+  modalidad: string;
+  estado_pedido: string;
+  estado_pago: string;
+  metodo_previsto: string;
+  subtotal: number;
+  descuento: number;
+  costo_delivery: number | null;
+  total: number | null;
+  demostracion: boolean;
+  created_at: string;
+  local: Local;
+  items: {
+    producto_id: string;
+    nombre_producto: string;
+    cantidad: number;
+    precio_unitario: number;
+    subtotal: number;
+  }[];
+  historial: { accion: string; estado: string; created_at: string }[];
+};
+export function usePedido(codigo: string) {
+  const auth = useAuth();
+  return useQuery({
+    queryKey: ['pedido', codigo, auth.usuario?.id ?? 'invitado'],
+    enabled: !auth.cargando && /^LYS-[0-9]{6,}$/.test(codigo),
+    queryFn: async () => {
+      const { data, error } = await crearClienteInsforge().database.rpc('consultar_pedido', {
+        p_codigo: codigo,
+        p_acceso: leerAcceso(codigo) ?? null,
+      });
+      if (error) throw new Error('No pudimos consultar el pedido. Revisa tu conexión y reintenta.');
+      return data as ResumenPedido | null;
+    },
+    staleTime: 15000,
+  });
 }
